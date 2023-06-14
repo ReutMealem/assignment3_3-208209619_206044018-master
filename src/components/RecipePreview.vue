@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <!-- <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     class="recipe-preview"
   >
@@ -9,13 +9,38 @@
     <div class="recipe-footer">
       <div :title="recipe.title" class="recipe-title">
         {{ recipe.title }}
-      </div>
+      </div> 
       <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
+        <li>{{ recipe.prepare_time }} minutes</li>
+        <li>{{ recipe.likes }} likes</li>
       </ul>
     </div>
-  </router-link>
+  </router-link> -->
+<div>
+  <b-card
+    :title="recipe.recipe_name"
+    :img-src="recipe.image_recipe"
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 20rem;"
+    class="mb-2"
+  >
+    <b-card-text>
+      prepare_time = {{recipe.prepare_time}}
+      like= {{recipe.likes}}
+      is_vegan = {{recipe.is_vegan}}
+      is_veget= {{recipe.is_veget}}
+      
+      
+      <!-- TODO:  viewedRecipes:{{viewedRecipes}} -->
+       <!-- TODO:  favRecipes:{{favRecipes}} -->
+      Some quick example text to build on the card title and make up the bulk of the card's content.
+    </b-card-text>
+    <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
+    <b-button href="#" variant="primary">Go somewhere</b-button>
+  </b-card>
+</div>
 </template>
 
 <script>
@@ -27,8 +52,27 @@ export default {
   },
   data() {
     return {
-      image_load: false
+      image_load: false,
+      viewedRecipes: []
     };
+  },
+  methods:{
+    async getViewed(){
+      try {
+        const response = await this.axios.get(
+          this.$root.store.server_domain + "/userLastViewedRecipes",
+          // "https://test-for-3-2.herokuapp.com/recipes/random"
+        );
+
+        const viewedRecipes = response.data.recipes;
+        console.log(viewedRecipes);
+
+        this.viewedRecipes.push(...viewedRecipes);
+        // console.log(this.viewedRecipes);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   props: {
     recipe: {

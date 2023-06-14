@@ -13,13 +13,18 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
     </div>
-    <router-view />
+    <!-- <navbar></navbar> -->
+    <router-view id="router-view" style="min-height: 900px"></router-view>
+    <footer style="background-color: purple; color: white"> @lireRecipes </footer>
   </div>
 </template>
 
 <script>
+
+// import navbar from './components/navber';
 export default {
   name: "App",
+  // components: {navbar: navbar},
   methods: {
     Logout() {
       this.$root.store.logout();
