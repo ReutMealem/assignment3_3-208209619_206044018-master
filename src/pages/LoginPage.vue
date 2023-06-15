@@ -95,18 +95,16 @@ export default {
       try {
         
         const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Login",
+      
           this.$root.store.server_domain +"/Login",
-          // "http://132.72.65.211:80/Login",
-          // "http://132.73.84.100:80/Login",
 
           {
             username: this.form.username,
             password: this.form.password
-          }
+          },
+      
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
+
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
@@ -116,13 +114,11 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
 
       this.Login();
     }

@@ -2,31 +2,38 @@
   <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
+        <h1>{{ recipe.recipe_name }}</h1>
+        <img :src="recipe.image_recipe" class="center" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>Ready in {{ recipe.prepare_time }} minutes</div>
+              <div>Likes: {{ recipe.likes }} likes</div>
+              <div> Portion: {{ recipe.portions}}</div>
+              <div v-if="recipe.is_vegan"> Vegan </div>
+              <div v-if="recipe.is_veget"> Vegetarian </div>
+              <div v-if="recipe.is_glutenFree"> GlutenFree </div>
+
             </div>
             Ingredients:
             <ul>
               <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
+                v-for="(i, index) in recipe.recipe_ingredient"
+                :key="index + '_' + i.name"
               >
-                {{ r.original }}
+                {{ i.name }} {{i.amount}} {{i.unitLong}}
+
               </li>
             </ul>
           </div>
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
+              
+              <li v-for="s in recipe.recipe_instruction[0].steps" :key="s">
+                {{ s }}
               </li>
             </ol>
           </div>
@@ -49,59 +56,9 @@ export default {
     };
   },
   async created() {
-    try {
-      let response;
-      // response = this.$route.params.response;
 
-      try {
-        response = await this.axios.get(
-          // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + "/recipes/info",
-          {
-            params: { id: this.$route.params.recipeId }
-          }
-        );
-
-        // console.log("response.status", response.status);
-        if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
-        console.log("error.response.status", error.response.status);
-        this.$router.replace("/NotFound");
-        return;
-      }
-
-      let {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
-      } = response.data.recipe;
-
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
-
-      let _recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
-      };
-
-      this.recipe = _recipe;
-    } catch (error) {
-      console.log(error);
-    }
+      this.recipe = this.$route.params.recipe;
+      console.log("HERE RECIPE:", this.recipe.recipe_id);
   }
 };
 </script>

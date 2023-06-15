@@ -32,13 +32,13 @@
       is_vegan = {{recipe.is_vegan}}
       is_veget= {{recipe.is_veget}}
       
-      
       <!-- TODO:  viewedRecipes:{{viewedRecipes}} -->
        <!-- TODO:  favRecipes:{{favRecipes}} -->
-      Some quick example text to build on the card title and make up the bulk of the card's content.
     </b-card-text>
     <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
-    <b-button href="#" variant="primary">Go somewhere</b-button>
+    <router-link :to="{ name: 'recipe', params: {recipe: recipe} }" tag="button">View Recipe</router-link>
+
+    <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
   </b-card>
 </div>
 </template>
@@ -52,31 +52,18 @@ export default {
   },
   data() {
     return {
-      image_load: false,
-      viewedRecipes: []
+      image_load: false
+      
     };
   },
-  methods:{
-    async getViewed(){
-      try {
-        const response = await this.axios.get(
-          this.$root.store.server_domain + "/userLastViewedRecipes",
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
-        );
-
-        const viewedRecipes = response.data.recipes;
-        console.log(viewedRecipes);
-
-        this.viewedRecipes.push(...viewedRecipes);
-        // console.log(this.viewedRecipes);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  },
+  
   props: {
     recipe: {
       type: Object,
+      required: true
+    },
+    viewed: {
+      type: Boolean,
       required: true
     }
 
