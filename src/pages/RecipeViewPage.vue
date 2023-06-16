@@ -15,7 +15,7 @@
               <div v-if="recipe.is_vegan"> Vegan </div>
               <div v-if="recipe.is_veget"> Vegetarian </div>
               <div v-if="recipe.is_glutenFree"> GlutenFree </div>
-
+              
             </div>
             Ingredients:
             <ul>
@@ -30,12 +30,13 @@
           </div>
           <div class="wrapped">
             Instructions:
-            <ol>
-              
+            <!-- Check if recipe has instructions and steps before rendering -->
+            <ol v-if="recipe.recipe_instruction[0] && recipe.recipe_instruction[0].steps.length">
               <li v-for="s in recipe.recipe_instruction[0].steps" :key="s">
                 {{ s }}
               </li>
             </ol>
+            <p v-else>No instructions available</p>
           </div>
         </div>
       </div>
@@ -58,7 +59,6 @@ export default {
   async created() {
 
       this.recipe = this.$route.params.recipe;
-      console.log("HERE RECIPE:", this.recipe.recipe_id);
   }
 };
 </script>

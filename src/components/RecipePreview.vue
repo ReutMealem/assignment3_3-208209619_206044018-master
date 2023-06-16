@@ -16,10 +16,11 @@
       </ul>
     </div>
   </router-link> -->
-<div>
+<div> 
+  <!-- TO DO: check if image load  --> 
   <b-card
     :title="recipe.recipe_name"
-    :img-src="recipe.image_recipe"
+    :img-src="recipe.image_recipe" 
     img-alt="Image"
     img-top
     tag="article"
@@ -27,10 +28,10 @@
     class="mb-2"
   >
     <b-card-text>
-      prepare_time = {{recipe.prepare_time}}
-      like= {{recipe.likes}}
-      is_vegan = {{recipe.is_vegan}}
-      is_veget= {{recipe.is_veget}}
+      <b>prepare_time = {{recipe.prepare_time}}</b><br/>
+      <b>like= {{recipe.likes}}</b><br/>
+      <b>is_vegan = {{recipe.is_vegan}}</b><br/>
+      <b>is_veget= {{recipe.is_veget}}</b><br/>
       
       <!-- TODO:  viewedRecipes:{{viewedRecipes}} -->
        <!-- TODO:  favRecipes:{{favRecipes}} -->
@@ -46,9 +47,9 @@
 <script>
 export default {
   mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
+    // this.axios.get(this.recipe.image_recipe).then((i) => {
+    //   this.image_load = true;
+    // });
   },
   data() {
     return {
@@ -66,6 +67,7 @@ export default {
       type: Boolean,
       required: true
     }
+
 
     // id: {
     //   type: Number,
