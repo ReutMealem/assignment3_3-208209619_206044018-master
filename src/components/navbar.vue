@@ -5,7 +5,7 @@
       <b-navbar-brand href="#">Logo</b-navbar-brand>
       <router-link :to="{ name: 'main' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>Home</router-link>
       <router-link :to="{ name: 'search' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact >Search</router-link>
-      <router-link :to="{ name: 'about' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>About</router-link>
+      <!-- <router-link :to="{ name: 'about' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>About</router-link> -->
         
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -13,6 +13,8 @@
         <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
             <b-nav-item-dropdown v-if="$root.store.username" :disabled="false" text="Private" right>
+            <router-link :to="{ name: 'favorites' }" tag="b-dropdown-item" active-class="active" class="nav-link" exact >Favorites Recipes</router-link>
+
             <b-dropdown-item href="#">Favorites Recipes</b-dropdown-item>
             <b-dropdown-item href="#">Personal Recipes</b-dropdown-item>
             <b-dropdown-item href="#">Family Recipes</b-dropdown-item>
