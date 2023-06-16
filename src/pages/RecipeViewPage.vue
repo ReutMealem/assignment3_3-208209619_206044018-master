@@ -15,7 +15,7 @@
               <div v-if="recipe.is_vegan"> Vegan </div>
               <div v-if="recipe.is_veget"> Vegetarian </div>
               <div v-if="recipe.is_glutenFree"> GlutenFree </div>
-
+              
             </div>
             Ingredients:
             <ul>
