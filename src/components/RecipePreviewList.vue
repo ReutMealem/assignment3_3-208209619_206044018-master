@@ -8,7 +8,6 @@
       <b-col v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
         <!-- <RecipePreview  class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/> -->
         <RecipePreview  class="recipePreview" :recipe="r" :viewed="false"/>
-
       </b-col>
     </b-row>
     <p v-if="noResults">No Recipes</p>
@@ -41,7 +40,6 @@ export default {
   },
   mounted() {
     this.updateRecipes();
-    // this.getViewed();
   },
   methods: {
     async updateRecipes() {
@@ -71,21 +69,28 @@ export default {
         if(this.recipes.length == 0){
           this.noResults = true;
         }
-        console.log("recipes:",this.recipes);
+        else{
+          if(this.$root.store.username){ // checks if user logged in to call getViewed
+            console.log("user logged: " ,this.$root.store.username);
+            this.getViewed();
+            console.log("viewed recipes: ",this.viewedRecipes);
+          }
+        }
       } catch (error) {
         console.log(error);
       }
     },
+
     async getViewed(){
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/userViewedRecipes",
         );
         const viewedRecipesNotFiltered = response.data.recipes;
+        // viewed only for API recipes (needs to be empty for now (add in DB))
         const viewedRecipes = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
         this.viewedRecipes = [];
         this.viewedRecipes.push(...viewedRecipes);
-
       } catch (error) {
         console.log(error);
       }

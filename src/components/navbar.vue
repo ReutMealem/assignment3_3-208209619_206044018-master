@@ -14,8 +14,6 @@
         <b-navbar-nav>
             <b-nav-item-dropdown v-if="$root.store.username" :disabled="false" text="Private" right>
             <router-link :to="{ name: 'favorites' }" tag="b-dropdown-item" active-class="active" class="nav-link" exact >Favorites Recipes</router-link>
-
-            <b-dropdown-item href="#">Favorites Recipes</b-dropdown-item>
             <b-dropdown-item href="#">Personal Recipes</b-dropdown-item>
             <b-dropdown-item href="#">Family Recipes</b-dropdown-item>
             </b-nav-item-dropdown>

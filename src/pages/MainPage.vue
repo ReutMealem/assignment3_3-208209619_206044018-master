@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList path ="/recipes/generalRandomRecipes" title="Randome Recipes" class="RandomRecipes center" />
+    <RecipePreviewList path ="/recipes/generalRandomRecipes" title="Random Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
 <!--  
     <RecipePreviewList
