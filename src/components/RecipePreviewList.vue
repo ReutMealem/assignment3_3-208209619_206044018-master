@@ -5,16 +5,19 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
-        <!-- <RecipePreview  class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/> -->
-        <RecipePreview  class="recipePreview" :recipe="r" :viewed="false"/>
-      </b-col>
+      <b-row v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
+        
+          <RecipePreview v-if=check_viewed class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/>
+          <RecipePreview v-else class="recipePreview" :recipe="r" :viewed="false"/>
+       
+      </b-row>
     </b-row>
     <p v-if="noResults">No Recipes</p>
   </b-container>
 </template>
 
 <script>
+import { type } from 'os';
 import RecipePreview from "./RecipePreview.vue";
 export default {
   name: "RecipePreviewList",
@@ -22,13 +25,23 @@ export default {
     RecipePreview,
   },
   props: {
+    check_viewed: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     title: {
       type: String,
-      required: true
+      required: false
     },
     path: {
       type: String,
       required: true
+    },
+    new_recipe: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data() {
@@ -40,13 +53,13 @@ export default {
   },
   mounted() {
     this.updateRecipes();
+    this.getViewed();
   },
   methods: {
     async updateRecipes() {
       try {
         this.noResults = false;
         const response = await this.axios.get(
-          // this.$root.store.server_domain + "/recipes/generalRandomRecipes",
           this.$root.store.server_domain + this.path,
         );
         console.log(this.path);
@@ -62,41 +75,44 @@ export default {
           this.recipes.push(...recipes_family);
         }
         else{
-          const recipes = response.data.recipes;
-          this.recipes = [];
-          this.recipes.push(...recipes);
+          if (this.new_recipe){
+            const recipes = response.data.recipes;
+            console.log("hereeeeeeeeeeeeee", recipes);
+            this.recipes = [];
+            this.recipes.push(...recipes);
+          }
+
         }
         if(this.recipes.length == 0){
           this.noResults = true;
         }
-        else{
-          if(this.$root.store.username){ // checks if user logged in to call getViewed
-            console.log("user logged: " ,this.$root.store.username);
-            this.getViewed();
-            console.log("viewed recipes: ",this.viewedRecipes);
-          }
-        }
+
       } catch (error) {
         console.log(error);
       }
     },
 
     async getViewed(){
+      if (!this.check_viewed){
+        return;
+      }
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/userViewedRecipes",
         );
         const viewedRecipesNotFiltered = response.data.recipes;
-        // viewed only for API recipes (needs to be empty for now (add in DB))
-        const viewedRecipes = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
+        // viewed only for API recipes (needs to be one recipes number 2)
+        const viewedRecipes_type_id = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
+        const id_recipes_list = viewedRecipes_type_id.map(recipe=> recipe.recipe_id); 
         this.viewedRecipes = [];
-        this.viewedRecipes.push(...viewedRecipes);
+        this.viewedRecipes.push(...id_recipes_list);
+    
       } catch (error) {
         console.log(error);
       }
     },
     recipeInViewed(recipe_id) {
-      return this.viewedRecipes.some(recipe => recipe.recipe_id === recipe_id);
+      return this.viewedRecipes.includes(recipe_id);
     },
   },
   

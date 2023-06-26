@@ -17,6 +17,7 @@
     </div>
   </router-link> -->
 <div> 
+  <router-link :to="{ name: 'recipe', params: {recipe: recipe} }">
   <!-- TO DO: check if image load  --> 
   <b-card
     :title="recipe.recipe_name"
@@ -28,32 +29,37 @@
     class="mb-2"
   >
     <b-card-text>
-      <b>prepare_time = {{recipe.prepare_time}}</b><br/>
-      <b>like= {{recipe.likes}}</b><br/>
-      <b>is_vegan = {{recipe.is_vegan}}</b><br/>
-      <b>is_veget= {{recipe.is_veget}}</b><br/>
-      
+      <ul class="recipe-overview">
+        <li><b>prepare_time = {{recipe.prepare_time}}</b><br/></li>
+        <li><b>like= {{recipe.likes}}</b><br/></li>
+        <li><b>is_vegan = {{recipe.is_vegan}}</b><br/></li>
+        <li><b>is_veget= {{recipe.is_veget}}</b><br/></li>
+        <!-- viewed - just for now to have indication -->
+        <li><b>viewed= {{this.viewed}}</b><br/></li>
+      </ul>
       <!-- TODO:  viewedRecipes:{{viewedRecipes}} -->
        <!-- TODO:  favRecipes:{{favRecipes}} -->
     </b-card-text>
     <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
-    <router-link :to="{ name: 'recipe', params: {recipe: recipe} }" tag="button">View Recipe</router-link>
+    <!-- <router-link :to="{ name: 'recipe', params: {recipe: recipe} }" tag="button">View Recipe</router-link> -->
 
     <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
   </b-card>
+  </router-link>
 </div>
 </template>
 
 <script>
 export default {
   mounted() {
+   
     // this.axios.get(this.recipe.image_recipe).then((i) => {
     //   this.image_load = true;
     // });
   },
   data() {
     return {
-      image_load: false
+      image_load: false,
       
     };
   },
@@ -67,47 +73,25 @@ export default {
       type: Boolean,
       required: true
     }
-
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   }
 };
 </script>
 
 <style scoped>
+
 .recipe-preview {
   display: inline-block;
   width: 90%;
   height: 100%;
   position: relative;
   margin: 10px 10px;
+  
 }
 .recipe-preview > .recipe-body {
   width: 100%;
   height: 200px;
   position: relative;
+
 }
 
 .recipe-preview .recipe-body .recipe-image {
@@ -157,6 +141,7 @@ export default {
   flex: 1 auto;
   table-layout: fixed;
   margin-bottom: 0px;
+  color:black;
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview li {
@@ -170,5 +155,6 @@ export default {
   width: 90px;
   display: table-cell;
   text-align: center;
+  color:black;
 }
 </style>
