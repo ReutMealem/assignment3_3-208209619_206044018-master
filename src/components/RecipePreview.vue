@@ -41,8 +41,7 @@
        <!-- TODO:  favRecipes:{{favRecipes}} -->
     </b-card-text>
     <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
-    <!-- <router-link :to="{ name: 'recipe', params: {recipe: recipe} }" tag="button">View Recipe</router-link> -->
-
+    <router-link :to="{ name: 'recipe', params: {recipe: recipe, type: type} }" tag="button">View Recipe</router-link>
     <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
   </b-card>
   </router-link>
@@ -71,6 +70,10 @@ export default {
     },
     viewed: {
       type: Boolean,
+      required: true
+    },
+    type: {
+      type: String,
       required: true
     }
   }

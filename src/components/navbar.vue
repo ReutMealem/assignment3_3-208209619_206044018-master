@@ -14,11 +14,23 @@
         <b-navbar-nav>
             <b-nav-item-dropdown v-if="$root.store.username" :disabled="false" text="Private" right>
             <router-link :to="{ name: 'favorites' }" tag="b-dropdown-item" active-class="active" class="nav-link" exact >Favorites Recipes</router-link>
-            <b-dropdown-item href="#">Personal Recipes</b-dropdown-item>
-            <b-dropdown-item href="#">Family Recipes</b-dropdown-item>
+            <router-link :to="{ name: 'personal' }" tag="b-dropdown-item" active-class="active" class="nav-link" exact >Personal Recipes</router-link>
+            <router-link :to="{ name: 'family' }" tag="b-dropdown-item" active-class="active" class="nav-link" exact >Family Recipes</router-link>
             </b-nav-item-dropdown>
 
         </b-navbar-nav>
+        
+
+        <b-navbar-nav>
+
+            <b-nav-item-dropdown v-if="$root.store.username" :disabled="false" text="Create New Recipe" right>
+            <b-dropdown-item v-b-modal.modal-1 id="modal-1"  @click="showModal">Create Personal Recipe</b-dropdown-item>
+              <CreatePersonalRecipe v-if="createPersonalRecipeClicked"></CreatePersonalRecipe>
+            </b-nav-item-dropdown>
+
+        </b-navbar-nav> 
+
+
 
         <b v-if="!$root.store.username">
         Hello Guest
@@ -48,8 +60,20 @@
 </template>
 
 <script>
+import CreatePersonalRecipe from '@/pages/CreatePersonalRecipe';
 export default {
     name: "navbar",
+    components: {
+      CreatePersonalRecipe,
+    },
+    data() {
+      return {
+        createPersonalRecipeClicked: false,
+        };
+    },
+    mounted() {
+      this.createPersonalRecipeClicked = false;
+    },
     methods: {
     Logout() {
       this.$root.store.logout();
@@ -58,6 +82,10 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    showModal(){
+      console.log("createPersonalRecipeClicked")
+      this.createPersonalRecipeClicked = true;
     }
   }
 };

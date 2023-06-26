@@ -5,12 +5,10 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-row v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
-        
-          <RecipePreview v-if=check_viewed class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/>
-          <RecipePreview v-else class="recipePreview" :recipe="r" :viewed="false"/>
-       
-      </b-row>
+      <b-col v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
+        <!-- <RecipePreview  class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/> -->
+        <RecipePreview  class="recipePreview" :recipe="r" :viewed="false" :type="type"/>
+      </b-col>
     </b-row>
     <p v-if="noResults">No Recipes</p>
   </b-container>
@@ -38,6 +36,12 @@ export default {
       type: String,
       required: true
     },
+
+    type: {
+      type: String,
+      required: true
+      },
+      
     new_recipe: {
       type: Boolean,
       required: false,
@@ -64,6 +68,7 @@ export default {
         );
         console.log(this.path);
         if(this.path==="/users/userFavoriteRecipes"){
+          console.log("inside ", this.path);
           // TO DO: fix the output of the response: { recipes: [ { API: [Array], personal: [Array], family: [Array] } ] } to be one big array of recipes.
           const recipes_API = response.data.recipes[0].API;
           const recipes_personal = response.data.recipes[0].personal;

@@ -1,16 +1,15 @@
 <template>
   <div class="container">
-    
     <div class="left">
       <b> Random Recipes </b>
       <div v-if="!$root.store.username">
-      <RecipePreviewList class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
+      <RecipePreviewList type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
       </div>
       <div v-else>
-        <RecipePreviewList class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :new_recipe="this.new_random"></RecipePreviewList>
+        <RecipePreviewList type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :new_recipe="this.new_random"></RecipePreviewList>
       </div>
       <b-button @click="loadNewRandomRecipes">New Recipes</b-button>
-
+ 
       </div >
     <div class="right">
       
@@ -18,12 +17,11 @@
       
       <div v-else>
         <b>Last Viewed Recipes</b>
-        <RecipePreviewList  path ="/users/userLastViewedRecipes" >
+        <RecipePreviewList type="API" path ="/users/userLastViewedRecipes" >
         </RecipePreviewList> 
       </div>
     </div>
  
-
     <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
     >
