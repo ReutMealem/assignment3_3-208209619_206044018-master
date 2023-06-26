@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-      <h1 class="title">Favorites Page</h1>
-      <RecipePreviewList type="favorite" path="/users/userFavoriteRecipes" title="Favorites Recipes" class="FavoritesRecipes center" /> 
+      <h1 class="title">Family Page</h1>
+      <RecipePreviewList  type="family" path="/users/userFamilyRecipes" title="Family Recipes" class="FamilyRecipes center" /> 
     </div>
 </template>
   
@@ -10,6 +10,6 @@
     export default {
     components: {
         RecipePreviewList
-    }
+    },
     };
 </script>

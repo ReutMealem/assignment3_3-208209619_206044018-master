@@ -5,39 +5,53 @@ import axios from "axios";
 
 import routes from "./routes";
 import VueRouter from "vue-router";
+
+//
+import BootstrapVue from "bootstrap-vue"; // Import the whole BootstrapVue object
+//
+
+
+
+import Vuelidate from "vuelidate";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+// import {
+//   FormGroupPlugin,
+//   FormPlugin,
+//   FormInputPlugin,
+//   ButtonPlugin,
+//   CardPlugin,
+//   NavbarPlugin,
+//   FormSelectPlugin,
+//   AlertPlugin,
+//   ToastPlugin,
+//   LayoutPlugin,
+// } from "bootstrap-vue";
+// [
+//   FormGroupPlugin,
+//   FormPlugin,
+//   FormInputPlugin,
+//   ButtonPlugin,
+//   CardPlugin,
+//   NavbarPlugin,
+//   FormSelectPlugin,
+//   AlertPlugin,
+//   ToastPlugin,
+//   LayoutPlugin,
+// ].forEach((x) => Vue.use(x));
+// Vue.use(Vuelidate);
+
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
 });
 
-import Vuelidate from "vuelidate";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import {
-  FormGroupPlugin,
-  FormPlugin,
-  FormInputPlugin,
-  ButtonPlugin,
-  CardPlugin,
-  NavbarPlugin,
-  FormSelectPlugin,
-  AlertPlugin,
-  ToastPlugin,
-  LayoutPlugin,
-} from "bootstrap-vue";
-[
-  FormGroupPlugin,
-  FormPlugin,
-  FormInputPlugin,
-  ButtonPlugin,
-  CardPlugin,
-  NavbarPlugin,
-  FormSelectPlugin,
-  AlertPlugin,
-  ToastPlugin,
-  LayoutPlugin,
-].forEach((x) => Vue.use(x));
+
+//
 Vue.use(Vuelidate);
+Vue.use(BootstrapVue); 
+//
+
 
 axios.interceptors.request.use(
   function(config) {
