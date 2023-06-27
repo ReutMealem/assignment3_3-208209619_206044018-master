@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <h1 class="title">Favorites Page</h1>
-      <RecipePreviewList type="favorite" path="/users/userFavoriteRecipes" title="Favorites Recipes" class="FavoritesRecipes center" /> 
+      <RecipePreviewList page_type="favorite" path="/users/userFavoriteRecipes" title="Favorites Recipes" class="FavoritesRecipes center" /> 
     </div>
 </template>
   
