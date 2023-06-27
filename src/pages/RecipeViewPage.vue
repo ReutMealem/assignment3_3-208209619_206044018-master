@@ -105,9 +105,9 @@ export default {
       const response = await this.axios.get(
         this.$root.store.server_domain + "/users/userFavoriteRecipes"
         );
-        const recipes_API = response.data.recipes[0].API;
-        const recipes_personal = response.data.recipes[0].personal;
-        const recipes_family = response.data.recipes[0].family;
+        const recipes_API = response.data.recipes.API;
+        const recipes_personal = response.data.recipes.personal;
+        const recipes_family = response.data.recipes.family;
         this.favoritesRecipes = [...recipes_API, ...recipes_personal, ...recipes_family];
       
     },

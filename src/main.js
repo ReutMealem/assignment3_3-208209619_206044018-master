@@ -102,7 +102,7 @@ new Vue({
   router,
   data() {
     return {
-      store: shared_data,
+      store: shared_data
     };
   },
   methods: {

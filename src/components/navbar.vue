@@ -5,7 +5,7 @@
       <b-navbar-brand href="#">Logo</b-navbar-brand>
       <router-link :to="{ name: 'main' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>Home</router-link>
       <router-link :to="{ name: 'search' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact >Search</router-link>
-      <!-- <router-link :to="{ name: 'about' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>About</router-link> -->
+      <router-link :to="{ name: 'about' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>About</router-link>
         
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -24,8 +24,10 @@
         <b-navbar-nav>
 
             <b-nav-item-dropdown v-if="$root.store.username" :disabled="false" text="Create New Recipe" right>
-            <b-dropdown-item v-b-modal.modal-1 id="modal-1"  @click="showModal">Create Personal Recipe</b-dropdown-item>
+            <b-dropdown-item v-b-modal.modal-1 id="modal-1"  @click="showPersonalModal">Create Personal Recipe</b-dropdown-item>
               <CreatePersonalRecipe v-if="createPersonalRecipeClicked"></CreatePersonalRecipe>
+            <b-dropdown-item v-b-modal.modal-2 id="modal-2"  @click="showFamilyModal">Create Family Recipe</b-dropdown-item>
+              <CreateFamilyRecipe v-if="createFamilyRecipeClicked"></CreateFamilyRecipe>
             </b-nav-item-dropdown>
 
         </b-navbar-nav> 
@@ -43,7 +45,7 @@
             <b-nav-item-dropdown right>
        
             <template #button-content>
-                <em>User</em>
+                <em>{{$root.store.username}}</em>
             </template>
 
             <b-dropdown-item @click="Logout">Log Out</b-dropdown-item>
@@ -61,18 +63,25 @@
 
 <script>
 import CreatePersonalRecipe from '@/pages/CreatePersonalRecipe';
+import CreateFamilyRecipe from '@/pages/CreateFamilyRecipe';
+
 export default {
     name: "navbar",
     components: {
       CreatePersonalRecipe,
+      CreateFamilyRecipe,
     },
     data() {
       return {
         createPersonalRecipeClicked: false,
+        createFamilyRecipeClicked: false,
+
         };
     },
     mounted() {
       this.createPersonalRecipeClicked = false;
+      this.createFamilyRecipeClicked = false;
+
     },
     methods: {
     Logout() {
@@ -83,9 +92,13 @@ export default {
         this.$forceUpdate();
       });
     },
-    showModal(){
+    showPersonalModal(){
       console.log("createPersonalRecipeClicked")
       this.createPersonalRecipeClicked = true;
+    },
+    showFamilyModal(){
+      console.log("createFamilyRecipeClicked")
+      this.createFamilyRecipeClicked = true;
     }
   }
 };

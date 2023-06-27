@@ -17,7 +17,7 @@ export default {
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
+      sessionStorage.setItem("lastSearch", '');
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

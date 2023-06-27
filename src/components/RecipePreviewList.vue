@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { type } from 'os';
 import RecipePreview from "./RecipePreview.vue";
 export default {
   name: "RecipePreviewList",
@@ -23,29 +22,17 @@ export default {
     RecipePreview,
   },
   props: {
-    check_viewed: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
     title: {
       type: String,
-      required: false
+      required: true
     },
     path: {
       type: String,
       required: true
     },
-
     type: {
       type: String,
       required: true
-      },
-      
-    new_recipe: {
-      type: Boolean,
-      required: false,
-      default: true
     }
   },
   data() {
@@ -57,22 +44,25 @@ export default {
   },
   mounted() {
     this.updateRecipes();
-    this.getViewed();
   },
   methods: {
     async updateRecipes() {
       try {
         this.noResults = false;
         const response = await this.axios.get(
+          // this.$root.store.server_domain + "/recipes/generalRandomRecipes",
           this.$root.store.server_domain + this.path,
         );
         console.log(this.path);
         if(this.path==="/users/userFavoriteRecipes"){
           console.log("inside ", this.path);
+          console.log("response.data.",response.data)
+          console.log(" recipes_API = response.data.recipes[0];",response.data.recipes[0]);
+
           // TO DO: fix the output of the response: { recipes: [ { API: [Array], personal: [Array], family: [Array] } ] } to be one big array of recipes.
-          const recipes_API = response.data.recipes[0].API;
-          const recipes_personal = response.data.recipes[0].personal;
-          const recipes_family = response.data.recipes[0].family;
+          const recipes_API = response.data.recipes.API;
+          const recipes_personal = response.data.recipes.personal;
+          const recipes_family = response.data.recipes.family;
 
           this.recipes = [];
           this.recipes.push(...recipes_API);
@@ -80,44 +70,41 @@ export default {
           this.recipes.push(...recipes_family);
         }
         else{
-          if (this.new_recipe){
-            const recipes = response.data.recipes;
-            console.log("hereeeeeeeeeeeeee", recipes);
-            this.recipes = [];
-            this.recipes.push(...recipes);
-          }
-
+          const recipes = response.data.recipes;
+          this.recipes = [];
+          this.recipes.push(...recipes);
         }
         if(this.recipes.length == 0){
           this.noResults = true;
         }
-
+        else{
+          if(this.$root.store.username){ // checks if user logged in to call getViewed
+            console.log("user logged: " ,this.$root.store.username);
+            this.getViewed();
+            console.log("viewed recipes: ",this.viewedRecipes);
+          }
+        }
       } catch (error) {
         console.log(error);
       }
     },
 
     async getViewed(){
-      if (!this.check_viewed){
-        return;
-      }
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/userViewedRecipes",
         );
         const viewedRecipesNotFiltered = response.data.recipes;
-        // viewed only for API recipes (needs to be one recipes number 2)
-        const viewedRecipes_type_id = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
-        const id_recipes_list = viewedRecipes_type_id.map(recipe=> recipe.recipe_id); 
+        // viewed only for API recipes (needs to be empty for now (add in DB))
+        const viewedRecipes = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
         this.viewedRecipes = [];
-        this.viewedRecipes.push(...id_recipes_list);
-    
+        this.viewedRecipes.push(...viewedRecipes);
       } catch (error) {
         console.log(error);
       }
     },
     recipeInViewed(recipe_id) {
-      return this.viewedRecipes.includes(recipe_id);
+      return this.viewedRecipes.some(recipe => recipe.recipe_id === recipe_id);
     },
   },
   

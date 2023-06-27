@@ -51,7 +51,6 @@
 <script>
 export default {
   mounted() {
-   
     // this.axios.get(this.recipe.image_recipe).then((i) => {
     //   this.image_load = true;
     // });
