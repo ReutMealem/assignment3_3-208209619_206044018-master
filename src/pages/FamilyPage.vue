@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <h1 class="title">Family Page</h1>
-      <RecipePreviewList  type="family" path="/users/userFamilyRecipes" title="Family Recipes" class="FamilyRecipes center" /> 
+      <RecipePreviewList  page_type="family" path="/users/userFamilyRecipes" title="Family Recipes" class="FamilyRecipes center" /> 
     </div>
 </template>
   

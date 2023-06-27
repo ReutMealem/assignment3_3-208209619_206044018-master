@@ -3,10 +3,11 @@
     <div class="left">
       <b> Random Recipes </b>
       <div v-if="!$root.store.username">
-      <RecipePreviewList type="API" title= "lala" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
+
+      <RecipePreviewList page_type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
       </div>
       <div v-else>
-        <RecipePreviewList type="API" title= "lala" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :new_recipe="this.new_random"></RecipePreviewList>
+        <RecipePreviewList page_type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :new_recipe="this.new_random"></RecipePreviewList>
       </div>
       <b-button @click="loadNewRandomRecipes">New Recipes</b-button>
  
@@ -17,7 +18,8 @@
       
       <div v-else>
         <b>Last Viewed Recipes</b>
-        <RecipePreviewList   title= "lala" type="API" path ="/users/userLastViewedRecipes" >
+
+        <RecipePreviewList page_type="API" path ="/users/userLastViewedRecipes" >
         </RecipePreviewList> 
       </div>
     </div>
