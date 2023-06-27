@@ -38,7 +38,6 @@
 <script>
 export default {
   mounted() {
-
     // this.check_image();
     this.checkImageValidity();
 
@@ -64,6 +63,7 @@ async checkImageValidity() {
 
       // Image loaded successfully
       // this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
+
       // recipe.imageLoadError = false;
     } catch (error) {
       // Error loading image, set fallback image path
