@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { type } from 'os';
 import RecipePreview from "./RecipePreview.vue";
 export default {
   name: "RecipePreviewList",
@@ -23,14 +22,9 @@ export default {
     RecipePreview,
   },
   props: {
-    check_viewed: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
     title: {
       type: String,
-      required: false
+      required: true
     },
     path: {
       type: String,
@@ -40,12 +34,6 @@ export default {
     page_type: {
       type: String,
       required: true
-      },
-      
-    new_recipe: {
-      type: Boolean,
-      required: false,
-      default: true
     }
   },
   data() {
@@ -56,20 +44,18 @@ export default {
       favoritesRecipes: [],
     };
   },
+
   created(){
     this.getFavorites();
     this.getViewed();
     this.updateRecipes();
   },
 
-  mounted() {
-
-
-  },
   methods: {
     async updateRecipes() {
       try {
         this.noResults = false;
+
         const response = await this.axios.get(this.$root.store.server_domain + this.path);
         console.log(this.path);
         
@@ -89,30 +75,27 @@ export default {
         if (this.recipes.length === 0) {
           this.noResults = true;
         }
+        
       } catch (error) {
         console.log(error);
       }
     },
 
     async getViewed(){
-      if (!this.check_viewed){
-        return;
-      }
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/userViewedRecipes",
         );
         const viewedRecipesNotFiltered = response.data.recipes;
-        // viewed only for API recipes (needs to be one recipes number 2)
-        const viewedRecipes_type_id = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
-        const id_recipes_list = viewedRecipes_type_id.map(recipe=> recipe.recipe_id); 
+        // viewed only for API recipes (needs to be empty for now (add in DB))
+        const viewedRecipes = viewedRecipesNotFiltered.filter(recipe => recipe.recipe_type === "API");
         this.viewedRecipes = [];
-        this.viewedRecipes.push(...id_recipes_list);
-    
+        this.viewedRecipes.push(...viewedRecipes);
       } catch (error) {
         console.log(error);
       }
     },
+
     recipeInViewed(recipe_id, recipe_type) {
       if (recipe_type == "API"){
         return this.viewedRecipes.includes(recipe_id);

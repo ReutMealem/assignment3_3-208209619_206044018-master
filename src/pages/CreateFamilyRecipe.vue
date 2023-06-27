@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <b-modal id="modal-1"  ref="my-modal" title="Create New Personal Recipe" hide-footer class="custom-modal">
-    <b-form @submit.prevent="onSave" @onReset.prevent="onReset" >
+    <div class="container">
+      <b-modal id="modal-2"  ref="my-modal" title="Create New Family Recipe" hide-footer class="custom-modal">
+        <b-form @submit.prevent="onSave" @reset.prevent="onReset" >
         <b-form-group>
         <b-form-input
             id="input-recipe_name"
@@ -33,6 +33,34 @@
             min="0"
         ></b-form-input>
         </b-form-group> 
+
+       
+        <b-form-group>
+        <b-form-input
+            id="input-recipe_owner"
+            v-model="form.recipe_owner"
+            type="text"
+            placeholder="Enter Recipe Owner "
+            required
+        ></b-form-input>
+        </b-form-group> 
+
+
+        <b-form-group>
+        <b-form-input
+            id="input-when_prepared"
+            v-model="form.when_prepared"
+            type="text"
+            placeholder="Enter when the recipe is prepared"
+            required
+        ></b-form-input>
+        </b-form-group> 
+      
+
+
+
+
+
 
         
 
@@ -103,7 +131,7 @@
                   
     <b-row>
 
-      <b-col><b-button pill style="background-color: blue; border-color: blue; font-weight: bold; color: white;" class="btn-warning" type="onReset">onReset</b-button></b-col>
+      <b-col><b-button pill style="background-color: blue; border-color: blue; font-weight: bold; color: white;" class="btn-warning" type="reset">onReset</b-button></b-col>
       <b-col><b-button pill type="submit" style="background-color: blue; border-color: blue; width:350%; font-weight: bold; color: white;" class="btn-primary">Save</b-button></b-col>
 
     </b-row>
@@ -133,6 +161,9 @@ export default {
         is_glutenFree: false,
         portions: '',
         image_recipe: '',
+        recipe_owner: '',
+        when_prepared: '',
+        
         
       },
 
@@ -165,12 +196,14 @@ export default {
         const user_id = response1.data.user_id;
       
         const response2 = await this.axios.post(
-          this.$root.store.server_domain + "/users/createPersonalRecipe",
+          this.$root.store.server_domain + "/users/createFamilyRecipe",
         {
           user_id: user_id,
           recipe_name: this.form.recipe_name,
           prepare_time: this.form.prepare_time ,
           likes: 0,
+          recipe_owner: this.form.recipe_owner,
+          when_prepared: this.form.when_prepared ,
           is_vegan: this.form.is_vegan,
           is_veget: this.form.is_veget,
           is_glutenFree: this.form.is_glutenFree,
@@ -196,6 +229,7 @@ export default {
       if (this.RecipesIngredients.length > 0 && this.RecipesInstructions.length > 0) {
       await this.Save();
       this.$root.toast("success", "Recipe created successfully", "success");
+      this.onReset();
       } 
       else {
         let errorMessage = "";
@@ -207,13 +241,15 @@ export default {
         }
         this.$root.toast("OOPS", errorMessage, "warning");
       }
-      this.onReset();
+      
     },
 
     async onReset(){
       this.form={
         recipe_name: '',
         prepare_time: '',
+        recipe_owner: '',
+        when_prepared:  '',
         is_vegan: false,
         is_veget: false,
         is_glutenFree: false,
@@ -231,7 +267,7 @@ export default {
       }
       this.RecipesIngredients=[],
       this.RecipesInstructions=[],
-      this.display_ingredients=""
+      this.display_ingredients="",
       this.display_instructions=""
 
     },

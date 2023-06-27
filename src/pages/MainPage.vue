@@ -3,6 +3,7 @@
     <div class="left">
       <b> Random Recipes </b>
       <div v-if="!$root.store.username">
+
       <RecipePreviewList page_type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
       </div>
       <div v-else>
@@ -17,6 +18,7 @@
       
       <div v-else>
         <b>Last Viewed Recipes</b>
+
         <RecipePreviewList page_type="API" path ="/users/userLastViewedRecipes" >
         </RecipePreviewList> 
       </div>
