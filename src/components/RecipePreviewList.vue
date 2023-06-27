@@ -7,7 +7,7 @@
     <b-row>
       <b-col v-for="(r, index) in recipes" :key="`${r.recipe_id}-${index}`">
         <!-- <RecipePreview  class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id)"/> -->
-        <RecipePreview  class="recipePreview" :recipe="r" :viewed="false" :type="type"/>
+        <RecipePreview  class="recipePreview" :recipe="r" :viewed="recipeInViewed(r.recipe_id, r.type)" :favorite="isRecipeInFavorites(r.recipe_id)" :type="r.type"/>
       </b-col>
     </b-row>
     <p v-if="noResults">No Recipes</p>
@@ -37,7 +37,7 @@ export default {
       required: true
     },
 
-    type: {
+    page_type: {
       type: String,
       required: true
       },
@@ -52,46 +52,43 @@ export default {
     return {
       recipes: [],
       viewedRecipes: [],
-      noResults: false
+      noResults: false,
+      favoritesRecipes: [],
     };
   },
-  mounted() {
-    this.updateRecipes();
+  created(){
+    this.getFavorites();
     this.getViewed();
+    this.updateRecipes();
+  },
+
+  mounted() {
+
+
   },
   methods: {
     async updateRecipes() {
       try {
         this.noResults = false;
-        const response = await this.axios.get(
-          this.$root.store.server_domain + this.path,
-        );
+        const response = await this.axios.get(this.$root.store.server_domain + this.path);
         console.log(this.path);
-        if(this.path==="/users/userFavoriteRecipes"){
-          console.log("inside ", this.path);
-          // TO DO: fix the output of the response: { recipes: [ { API: [Array], personal: [Array], family: [Array] } ] } to be one big array of recipes.
-          const recipes_API = response.data.recipes[0].API;
-          const recipes_personal = response.data.recipes[0].personal;
-          const recipes_family = response.data.recipes[0].family;
-
-          this.recipes = [];
-          this.recipes.push(...recipes_API);
-          this.recipes.push(...recipes_personal);
-          this.recipes.push(...recipes_family);
-        }
-        else{
-          if (this.new_recipe){
-            const recipes = response.data.recipes;
-            console.log("hereeeeeeeeeeeeee", recipes);
+        
+        if (this.path === "/users/userFavoriteRecipes") {
+          const recipes_API = response.data.recipes.API.map(recipe => ({ ...recipe, type: 'API' }));
+          const recipes_personal = response.data.recipes.personal.map(recipe => ({ ...recipe, type: 'personal' }));
+          const recipes_family = response.data.recipes.family.map(recipe => ({ ...recipe, type: 'family' }));
+          this.recipes = [...recipes_API, ...recipes_personal, ...recipes_family]; 
+        } else {
+          const recipes = response.data.recipes.map(recipe => ({ ...recipe, type: this.page_type }));
+          if (this.new_recipe) {
             this.recipes = [];
             this.recipes.push(...recipes);
           }
-
         }
-        if(this.recipes.length == 0){
+        
+        if (this.recipes.length === 0) {
           this.noResults = true;
         }
-
       } catch (error) {
         console.log(error);
       }
@@ -116,9 +113,41 @@ export default {
         console.log(error);
       }
     },
-    recipeInViewed(recipe_id) {
-      return this.viewedRecipes.includes(recipe_id);
+    recipeInViewed(recipe_id, recipe_type) {
+      if (recipe_type == "API"){
+        return this.viewedRecipes.includes(recipe_id);
+        }
+      else{
+        return true;
+      }
     },
+
+    async getFavorites(){
+      if(!this.$root.store.username ){
+        return;
+      }
+      const response = await this.axios.get(
+        this.$root.store.server_domain + "/users/userFavoriteRecipesByIdType"
+        );
+        this.favoritesRecipes = response.data.recipes;
+    },
+
+   isRecipeInFavorites(id) {
+    if (this.page_type === 'favorite'){
+      return true;
+    }
+    else{
+      const foundRecipe = this.favoritesRecipes.find((recipe) => recipe.recipe_id === id && recipe.recipe_type === this.page_type);
+
+      if (foundRecipe === undefined) {
+        console.log("Recipe is NOT in favorites -> false");
+        return false;
+      } else {
+        console.log("Recipe is in favorites- > true");
+        return true;
+      }
+    }
+   }
   },
   
 
