@@ -175,6 +175,7 @@ export default {
         diet: this.lastSearch.diet,
         intolerance: this.lastSearch.intolerance,
       };
+      this.onSearch();
     }
   }
 };
