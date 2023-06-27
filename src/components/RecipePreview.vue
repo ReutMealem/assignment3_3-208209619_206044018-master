@@ -13,13 +13,12 @@
     class="mb-2"
   >
     <b-card-text>
-      recipeeeeeeee image {{recipe.recipe_image}}
       <ul class="recipe-overview">
         <li><b>prepare_time = {{recipe.prepare_time}}</b><br/></li>
         <li><b>like= {{recipe.likes}}</b><br/></li>
         <li><b>is_vegan = {{recipe.is_vegan}}</b><br/></li>
         <li><b>is_veget= {{recipe.is_veget}}</b><br/></li>
-        <li><b>is_glutenFree= {{recipe.GlutenFree}}</b><br/></li>
+        <li><b>is_glutenFree= {{recipe.is_glutenFree}}</b><br/></li>
         <!-- viewed - just for now to have indication -->
         <li>
           <img :src="require('@/assets/eye.png')" class="small-image" v-if="viewed" />
@@ -64,9 +63,6 @@ async checkImageValidity() {
 
       // Image loaded successfully
       // this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
-
-      console.log('imageeeeeeeeeeeeCheck', this.recipe.image_recipe);
-
       // recipe.imageLoadError = false;
     } catch (error) {
       // Error loading image, set fallback image path
