@@ -50,7 +50,12 @@
       <span v-if="form.diet">Diet: {{form.diet}}, </span>
       <span v-if="form.intolerance">Intolerance: {{form.intolerance}}</span>
     </p>
-    <RecipePreviewList v-if="showSearchResult" title="Search result" v-bind:path="searchPath" type="API"></RecipePreviewList>
+    <p v-if="$root.store.username">
+      <RecipePreviewList v-if="showSearchResult" title="Search result" v-bind:path="searchPath" page_type="API"></RecipePreviewList>
+    </p>
+    <p v-else>
+      <RecipePreviewList v-if="showSearchResult" title="Search result" v-bind:path="searchPath" :check_viewed="false"  page_type="API"></RecipePreviewList>
+    </p>
     </div>
     <div class="div-back">
       <b-button id="back" type="submit" v-on:click="showSearchResult=false"  v-if="showSearchResult">Back To Search</b-button>

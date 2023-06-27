@@ -6,12 +6,13 @@
 
         <b v-if="$root.store.username">
           <img :src="require('@/assets/heart.png')" class="center small-image" v-if="isfavorite" />
-        </b>
-        <div>
+          <div>
             <button @click="addToFavorites()" v-if="!isfavorite">
                 Add To Favorites
             </button>
         </div>
+        </b>
+
         <img :src="recipe.image_recipe" class="center" />
       </div>
       <div class="recipe-body">

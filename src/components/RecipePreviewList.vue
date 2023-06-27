@@ -72,22 +72,23 @@ export default {
         this.noResults = false;
         const response = await this.axios.get(this.$root.store.server_domain + this.path);
         console.log(this.path);
+        if(response.data.recipes.length === 0){
+         this.noResults = true;
+        }
         
-        if (this.path === "/users/userFavoriteRecipes") {
+        else{
+          if (this.path === "/users/userFavoriteRecipes") {
           const recipes_API = response.data.recipes.API.map(recipe => ({ ...recipe, type: 'API' }));
           const recipes_personal = response.data.recipes.personal.map(recipe => ({ ...recipe, type: 'personal' }));
           const recipes_family = response.data.recipes.family.map(recipe => ({ ...recipe, type: 'family' }));
           this.recipes = [...recipes_API, ...recipes_personal, ...recipes_family]; 
-        } else {
-          const recipes = response.data.recipes.map(recipe => ({ ...recipe, type: this.page_type }));
-          if (this.new_recipe) {
-            this.recipes = [];
-            this.recipes.push(...recipes);
+          } else {
+            const recipes = response.data.recipes.map(recipe => ({ ...recipe, type: this.page_type }));
+            if (this.new_recipe) {
+              this.recipes = [];
+              this.recipes.push(...recipes);
+            }
           }
-        }
-        
-        if (this.recipes.length === 0) {
-          this.noResults = true;
         }
       } catch (error) {
         console.log(error);
@@ -126,10 +127,11 @@ export default {
       if(!this.$root.store.username ){
         return;
       }
-      const response = await this.axios.get(
+        const response = await this.axios.get(
         this.$root.store.server_domain + "/users/userFavoriteRecipesByIdType"
         );
         this.favoritesRecipes = response.data.recipes;
+        console.log("favo: " ,this.favoritesRecipes)
     },
 
    isRecipeInFavorites(id) {
