@@ -60,6 +60,9 @@
         </b-row>
         <b-form @submit.prevent="add_ingredient">
           <b-row>
+            Ingredients:
+          </b-row>
+          <b-row>
             <b-col>
           <b-form-group>
           <b-form-input v-model="form_ingredient.ingredient_name" style="width:220px;" type="text"  placeholder="Enter ingredient" required></b-form-input>
@@ -77,9 +80,10 @@
             <b-button pill type="button"  style="background-color: blue; border-color: blue; font-weight: bold; color: white;" @click="add_ingredient">Add Ingredient</b-button>
 
           </b-form-group>
-          <p><b>Ingredients that you added:</b>
+          <p v-if="display_ingredients != ''">
+            <b>Ingredients that you added:</b>
           <br/>
-          {{this.display_ingredients}}
+          {{display_ingredients}}
           </p>
           </b-col>
 
@@ -87,6 +91,9 @@
         </b-form>
 
         <b-form-group>
+          <b-row>
+            Instruction:
+          </b-row>
           <b-form-textarea
             id="textarea-instruction"
             v-model="form_instruction.instruction"
@@ -98,7 +105,8 @@
         <b-form-group>
           <b-button pill type="button" @click="add_instruction_step">Add Instruction Step</b-button>
         </b-form-group>
-        <p><b>Instructions that you added:</b></p>
+        <p v-if="display_instructions != ''">
+          <b>Instructions that you added:</b></p>
         <p>{{ display_instructions }}</p>
                   
     <b-row>

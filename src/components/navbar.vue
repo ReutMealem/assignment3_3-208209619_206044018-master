@@ -2,7 +2,9 @@
 
     <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Logo</b-navbar-brand>
+      <b-navbar-brand href="#">
+        <img src="@/assets/logo.png" height="50" width="80" alt="LiRe">
+      </b-navbar-brand>
       <router-link :to="{ name: 'main' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>Home</router-link>
       <router-link :to="{ name: 'search' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact >Search</router-link>
       <router-link :to="{ name: 'about' }" tag="b-navbar-brand" active-class="active" class="nav-link" exact>About</router-link>
