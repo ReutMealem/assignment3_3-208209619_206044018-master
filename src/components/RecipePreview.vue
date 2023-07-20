@@ -9,18 +9,19 @@
     img-alt="Image"
     img-top
     tag="article"
-    style="max-width: 20rem;"
+    style="width: 25rem; height: 35rem;"
     class="mb-2"
   >
     <b-card-text>
-      <ul class="recipe-overview">
+      <ul class="recipe-overview" style=" list-style-type: none;" >
         <li><b>prepare_time = {{recipe.prepare_time}}</b><br/></li>
         <li><b>like= {{recipe.likes}}</b><br/></li>
         <li><b>is_vegan = {{recipe.is_vegan}}</b><br/></li>
         <li><b>is_veget= {{recipe.is_veget}}</b><br/></li>
         <li><b>is_glutenFree= {{recipe.is_glutenFree}}</b><br/></li>
         <!-- viewed - just for now to have indication -->
-        <li>
+        <li v-if="viewed || 
+favorite" >
           <img :src="require('@/assets/eye.png')" class="small-image" v-if="viewed" />
           <img :src="require('@/assets/heart.png')" class="small-image" v-if="favorite" /> 
         </li>
@@ -97,6 +98,7 @@ async checkImageValidity() {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap');
 
 .recipe-preview {
   display: inline-block;
@@ -181,4 +183,16 @@ async checkImageValidity() {
   width: 30px; 
   height: 30px; 
 }
+
+
+.card {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Playfair Display', serif;
+  color:black;
+
+}
+
 </style>

@@ -10,6 +10,7 @@
 <script>
 
 import navbar from './components/navbar';
+
 export default {
   name: "App",
   components: {navbar: navbar},
@@ -35,6 +36,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
+  background-image:  url('./assets/recipe_background.jpg');
+  background-size: cover;
 }
 
 #nav {

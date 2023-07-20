@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <h3>
-      {{ title }}:
       <slot></slot>
     </h3>
     <b-row>
@@ -27,10 +26,6 @@ export default {
       type: Boolean,
       required: false,
       default: true
-    },
-    title: {
-      type: String,
-      required: false
     },
     path: {
       type: String,
