@@ -3,14 +3,16 @@
   <div class="row justify-content-center">
       <div class="col-md-6">
         
-        <b> Random Recipes </b>
+        <div class="design"><b>Random Recipes</b></div>
         <div v-if="!$root.store.username">
         <RecipePreviewList page_type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :check_viewed="false" :new_recipe="this.new_random" > </RecipePreviewList>
         </div>
         <div v-else>
           <RecipePreviewList page_type="API" class="RandomRecipes center" path ="/recipes/generalRandomRecipes" :new_recipe="this.new_random"></RecipePreviewList>
         </div>
-        <b-button @click="loadNewRandomRecipes">New Recipes</b-button>
+        <div>
+          <b-button @click="loadNewRandomRecipes">New Recipes</b-button>
+        </div>
   
       </div >
 
@@ -21,7 +23,7 @@
         </div>
         
         <div v-else>
-          <b>Last Viewed Recipes</b>
+          <div class="design"><b>Last Viewed Recipes</b></div>
           <RecipePreviewList page_type="API" path ="/users/userLastViewedRecipes" >
           </RecipePreviewList> 
         </div>
@@ -54,7 +56,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main_page{
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
 
+.design{
+  text-align: center;
+  font-family: 'Concert One', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color:black;
 }
 </style>

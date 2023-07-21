@@ -7,8 +7,8 @@
         <b v-if="$root.store.username">
           <img :src="require('@/assets/heart.png')" class="center small-image" v-if="isfavorite" />
           <div>
-            <button @click="addToFavorites()" v-if="!isfavorite">
-                Add To Favorites
+            <button class="fav-button" @click="addToFavorites()" v-if="!isfavorite">
+            Add To Favorites
             </button>
         </div>
         </b>
@@ -18,7 +18,7 @@
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
-            <div class="mb-3">
+            <div class="mb-3 summary">
               <div>Ready in {{ recipe.prepare_time }} minutes</div>
               <div>Likes: {{ recipe.likes }} likes</div>
               <div>Portions: {{ recipe.portions }}</div>
@@ -32,7 +32,7 @@
                 When Prepared: {{ recipe.when_prepared }}
               </div>
             </div>
-            Ingredients:
+            <div class="summary">Ingredients:</div>
             <!-- Check if recipe has ingredients before rendering -->
             <ul v-if="recipe.recipe_ingredient.length">
               <li
@@ -45,7 +45,7 @@
             <p v-else>No ingredients available</p>
           </div>
           <div class="wrapped">
-            Instructions:
+            <div class="summary">Instructions:</div>
             <!-- Check if recipe has instructions and steps before rendering -->
             <ol
               v-if="
@@ -125,6 +125,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
+
 .wrapper {
   display: flex;
 }
@@ -137,8 +139,47 @@ export default {
   margin-right: auto;
   width: 50%;
 }
+
+.recipe-header{
+  font-family: 'Concert One', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color:black;
+}
 .small-image {
   width: 50px; 
   height: 50px; 
 }
+.recipe-body{
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Concert One', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color:black;
+  padding: 10px;
+}
+.summary{
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.fav-button{
+  font-family: 'Concert One', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color:black;
+  width:20%;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.fav-button:hover {
+  color:white;
+  background-color:  #28b1bd;
+  /* Add other effects like color or box-shadow as needed */
+}
+
 </style>

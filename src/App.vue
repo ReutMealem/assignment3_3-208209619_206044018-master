@@ -3,7 +3,7 @@
 
     <navbar></navbar>
     <router-view id="router-view" style="min-height: 900px"></router-view>
-    <footer style="background-color: purple; color: white"> @lireRecipes </footer>
+    <footer style="background-color: transparent; color: white"> @lireRecipes </footer>
   </div>
 </template>
 
@@ -18,7 +18,6 @@ export default {
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-      sessionStorage.setItem("lastSearch", '');
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

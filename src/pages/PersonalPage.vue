@@ -4,8 +4,7 @@
     <RecipePreviewList
         page_type="personal"  
         path="/users/userPersonalRecipes"
-      title="Personal Recipes"
-      class="PersonalRecipes center"
+       class="PersonalRecipes center"
     />
   </div>
 </template>
@@ -18,3 +17,14 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
+
+.container{
+  text-align: center;
+  font-family: 'Concert One', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color:black;
+}
+</style>
