@@ -88,10 +88,13 @@ const shared_data = {
     localStorage.setItem("username", username);
     this.username = username;
     console.log("login", this.username);
+    localStorage.setItem("lastSearch","");
+
   },
   logout() {
     console.log("logout");
     localStorage.removeItem("username");
+    localStorage.setItem("lastSearch","");
     this.username = undefined;
   },
 };

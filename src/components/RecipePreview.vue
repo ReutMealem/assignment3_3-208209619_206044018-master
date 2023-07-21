@@ -2,23 +2,22 @@
   
 <div> 
   <router-link :to="{ name: 'recipe',query: {recipe: JSON.stringify(recipe), type: type, favor: favorite} }">
-  <!-- TO DO: check if image load  --> 
   <b-card
     :title="recipe.recipe_name"
     :img-src="recipe.image_recipe" 
     img-alt="Image"
     img-top
     tag="article"
-    style="width: 25rem; height: 35rem;"
+    style="width: 25rem; height: 37rem;"
     class="mb-2"
   >
     <b-card-text>
       <ul class="recipe-overview" style=" list-style-type: none;" >
-        <li><b>prepare_time = {{recipe.prepare_time}}</b><br/></li>
-        <li><b>like= {{recipe.likes}}</b><br/></li>
-        <li><b>is_vegan = {{recipe.is_vegan}}</b><br/></li>
-        <li><b>is_veget= {{recipe.is_veget}}</b><br/></li>
-        <li><b>is_glutenFree= {{recipe.is_glutenFree}}</b><br/></li>
+        <li><b><img :src="require('@/assets/clock.png')" height="30" width="30" alt="!"> {{recipe.prepare_time}} Minutes</b><br/></li>
+        <li><b><img :src="require('@/assets/likes.png')" height="30" width="30" alt="!"> {{recipe.likes}} Likes</b><br/></li>
+        <li v-if="recipe.is_vegan"><b><img :src="require('@/assets/vegan.png')" height="30" width="30" alt="!"> Vegan</b><br/></li>
+        <li v-if="recipe.is_veget"><b><img :src="require('@/assets/vegetarian.png')" height="30" width="30" alt="!"> Vegetarian</b><br/></li>
+        <li v-if="recipe.is_glutenFree"><b><img :src="require('@/assets/glutenFree.png')" height="30" width="30" alt="!"> Gluten Free</b><br/></li>
         <!-- viewed - just for now to have indication -->
         <li v-if="viewed || 
 favorite" >
@@ -29,7 +28,7 @@ favorite" >
 
     </b-card-text>
     <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
-    <router-link :to="{ name: 'recipe', query: {recipe: JSON.stringify(recipe), type: type, favor: favorite} }" tag="button">View Recipe</router-link>
+    <router-link :to="{ name: 'recipe', query: {recipe: JSON.stringify(recipe), type: type, favor: favorite} }" class="view-button" tag="button" >View Recipe</router-link>
     <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
   </b-card>
   </router-link>
@@ -98,8 +97,22 @@ async checkImageValidity() {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
+.view-button{
+  align-items: center;
+  width:100%;
+  padding: 8px;
+  border-radius: 10px;
+  font-family: 'Concert One', serif;
+  font-size:16px;
+  font-weight: 400;
+  color:black;
+}
+.view-button:hover {
+  color:white;
+  background-color:  #28b1bd;
+  /* Add other effects like color or box-shadow as needed */
+}
 .recipe-preview {
   display: inline-block;
   width: 90%;
@@ -190,7 +203,9 @@ async checkImageValidity() {
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Concert One', serif;
+  font-size: 16px;
+  font-weight: 400;
   color:black;
 
 }

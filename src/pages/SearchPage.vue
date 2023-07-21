@@ -1,7 +1,7 @@
 <template>
   <div class="container">
   <div>
-    <h1 class="title">Search Page</h1>
+    <div class="title">Search Page</div>
       <b-button id="back" type="submit" v-on:click="showSearchResult=false"  v-if="showSearchResult">Back To Search</b-button>
 
     <b-form @submit.prevent="onSearch" @reset.prevent="onReset">
@@ -44,17 +44,19 @@
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Search failed: {{ form.submitError }}
     </b-alert>
-    <p style="width:400px;" v-if="showSearchResult">Search Results for: {{form.recipe_name}} , amount: {{form.amount}}, order by: {{form.sort}}</p>
-    <p style="width:400px;" v-if="showSearchResult">
-      <span v-if="form.cuisine">Cuisine: {{form.cuisine}}, </span>
-      <span v-if="form.diet">Diet: {{form.diet}}, </span>
-      <span v-if="form.intolerance">Intolerance: {{form.intolerance}}</span>
-    </p>
+    <div class="search-results" v-if="showSearchResult">
+        <p>
+          Search Results for: {{ form.recipe_name }}, amount: {{ form.amount }}, order by: {{ form.sort }}
+          <span v-if="form.cuisine">, Cuisine: {{ form.cuisine }}</span>
+          <span v-if="form.diet">, Diet: {{ form.diet }}</span>
+          <span v-if="form.intolerance">, Intolerance: {{ form.intolerance }}</span>
+        </p>
+      </div>
     <p v-if="$root.store.username">
-      <RecipePreviewList v-if="showSearchResult" title="Search result" v-bind:path="searchPath" page_type="API"></RecipePreviewList>
+      <RecipePreviewList v-if="showSearchResult" v-bind:path="searchPath" page_type="API"></RecipePreviewList>
     </p>
     <p v-else>
-      <RecipePreviewList v-if="showSearchResult" title="Search result" v-bind:path="searchPath" :check_viewed="false"  page_type="API"></RecipePreviewList>
+      <RecipePreviewList v-if="showSearchResult"  v-bind:path="searchPath" :check_viewed="false"  page_type="API"></RecipePreviewList>
     </p>
     </div>
     <div class="div-back">
@@ -94,7 +96,7 @@ export default {
       
       intolerances: ['','Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut'],
       
-      lastSearch: sessionStorage.getItem("lastSearch"),
+      lastSearch: localStorage.getItem("lastSearch"),
       showSearchResult: false,
       searchPath: "",
     };
@@ -150,8 +152,8 @@ export default {
           'submitError': this.form.submitError
         };
         
-        sessionStorage.setItem("lastSearch", JSON.stringify(lastSearch));
-        this.lastSearch = JSON.parse(sessionStorage.getItem("lastSearch"))
+        localStorage.setItem("lastSearch", JSON.stringify(lastSearch));
+        this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"))
 
       } catch (err) {
         console.log(err.response);
@@ -170,15 +172,16 @@ export default {
         intolerance:  '',
       };
     },
-    showLastSearch(){
-      this.lastSearch = JSON.parse(sessionStorage.getItem("lastSearch"))
+    showLastSearch() {
+      this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"));
+      const lastSearchData = this.lastSearch;
       this.form = {
-        recipe_name: this.lastSearch.recipe_name,
-        amount: this.lastSearch.amount,
-        sort: this.lastSearch.sort,
-        cuisine: this.lastSearch.cuisine,
-        diet: this.lastSearch.diet,
-        intolerance: this.lastSearch.intolerance,
+        recipe_name: lastSearchData.recipe_name,
+        amount: lastSearchData.amount,
+        sort: lastSearchData.sort,
+        cuisine: lastSearchData.cuisine,
+        diet: lastSearchData.diet,
+        intolerance: lastSearchData.intolerance,
       };
       this.onSearch();
     }
@@ -186,21 +189,44 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
 .container {
   max-width: 500px;
 }
-.sticky{
-  position:fixed;
+.title{
+  text-align: center;
+  font-family: 'Concert One', serif;
+  font-size: 40px;
+  font-weight: 400;
+  color:black;
+  padding:20px;
 }
-.research{
+
+
+.search-results {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.search-results p {
+  margin: 0;
+}
+
+.search-results span {
+  margin-left: 10px;
+}
+
+.sticky {
+  position: fixed;
+}
+
+.research {
   margin-top: 15px;
   align: center;
-
-}
-h1{
-  text-align:center;
-  margin-bottom:20px;
-  font-family: "Times New Roman", Times, serif; 
 }
 
 </style>
