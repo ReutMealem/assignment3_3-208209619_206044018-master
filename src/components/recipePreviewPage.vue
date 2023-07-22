@@ -1,24 +1,30 @@
 <template>
   <div class="container">
+    <!-- Check if a recipe object is provided --> 
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.recipe_name }}</h1>
-
+        <!-- Recipe Header -->
+        <h1>{{ recipe.recipe_name }}</h1> 
+        <!-- Display favorite heart icon and button for authenticated users -->
         <b v-if="$root.store.username">
           <img :src="require('@/assets/heart.png')" class="center small-image" v-if="isfavorite" />
           <div>
             <button class="fav-button" @click="addToFavorites()" v-if="!isfavorite">
-            Add To Favorites
+              Add To Favorites
             </button>
         </div>
         </b>
 
+        <!-- Display recipe image --> 
         <img :src="recipe.image_recipe" class="center" />
       </div>
+      <!-- Recipe Body -->
       <div class="recipe-body">
         <div class="wrapper">
+          <!-- Left column for summary and ingredients -->
           <div class="wrapped">
             <div class="mb-3 summary">
+              <!-- Display recipe summary details -->
               <div>Ready in {{ recipe.prepare_time }} minutes</div>
               <div>Likes: {{ recipe.likes }} likes</div>
               <div>Portions: {{ recipe.portions }}</div>
@@ -32,6 +38,7 @@
                 When Prepared: {{ recipe.when_prepared }}
               </div>
             </div>
+            <!-- Display list of ingredients -->
             <div class="summary">Ingredients:</div>
             <!-- Check if recipe has ingredients before rendering -->
             <ul v-if="recipe.recipe_ingredient.length">
@@ -42,8 +49,12 @@
                 {{ i.name }} {{ i.amount }} {{ i.unitLong }}
               </li>
             </ul>
+            <!-- Display message if no ingredients available -->
             <p v-else>No ingredients available</p>
           </div>
+
+
+          <!-- Right column for instructions --> 
           <div class="wrapped">
             <div class="summary">Instructions:</div>
             <!-- Check if recipe has instructions and steps before rendering -->
@@ -57,6 +68,7 @@
                 {{ s }}
               </li>
             </ol>
+            <!-- Display message if no instructions available --> 
             <p v-else>No instructions available</p>
           </div>
         </div>
@@ -69,11 +81,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      favoritesRecipes: [],
-    };
-  },
   props: {
     recipe: {
       type: Object,
@@ -90,16 +97,15 @@ export default {
   },
   
   methods: {
+    // Method to add the recipe to favorites 
     async addToFavorites() {
-      console.log("add to favorites clicked");
       if (!(this.isfavorite)) {
-        console.log("Recipe is not in favorites and will add it now:");
         try {
+          // Call API endpoint to add the recipe to favorites for the authenticated user 
           const response = await this.axios.put(
             `${this.$root.store.server_domain}/users/userFavoriteRecipes/${this.recipe.recipe_id}/${this.type}`
           );
           this.onUpdateRecipe();
-          console.log(response);
         } catch (error) {
           console.error(error);
         }
@@ -108,13 +114,13 @@ export default {
         console.log("recipe is already in favorites!");
       }
     },
-
+    // Method to handle updating the recipe after adding to favorites
     async onUpdateRecipe() {
       this.RefreshPage();
       this.$root.toast("Save", "Recipes add to favorite successfully", "success");
 
     },
-
+    // Method to refresh the page after adding the recipe to favorites 
     async RefreshPage() {
     this.new_random=true;
     window.location.reload();
