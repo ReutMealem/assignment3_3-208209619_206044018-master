@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <loginComp></loginComp>
+    <!-- The login component --> 
+    <loginComp class="mt-5"></loginComp>
   </div>
 </template>
 
@@ -13,7 +14,35 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container {
-  max-width: 400px;
+@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
+
+.container{
+  // text-align: center;
+  font-family: 'Concert One', serif;
+  font-size: 20px;
+  color:black;
+  max-width: 600px;
 }
+.title{
+  text-align: center;
+  font-size: 40px;
+  font-weight: 400;
+  padding: 15px;
+}
+.click-button{
+  font-family: 'Concert One', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color:black;
+  width:20%;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+
+}
+.click-button:hover{
+  color:white;
+  background-color:  #28b1bd;
+}
+
 </style>

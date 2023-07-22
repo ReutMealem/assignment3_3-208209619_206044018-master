@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <h1 class="title">Personal Page</h1>
+    <div class="title">Personal Page</div>
+    <!-- Include the RecipePreviewList component to display personal recipes -->
     <RecipePreviewList
         page_type="personal"  
         path="/users/userPersonalRecipes"
-       class="PersonalRecipes center"
-    />
+       class="PersonalRecipes center"/>
   </div>
 </template>
   
@@ -20,11 +20,16 @@ export default {
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
 
+
 .container{
-  text-align: center;
   font-family: 'Concert One', serif;
-  font-size: 30px;
-  font-weight: 400;
+  font-size: 20px;
   color:black;
+}
+.title{
+  font-size: 40px;
+  font-weight: 400;
+  text-align: center;
+
 }
 </style>

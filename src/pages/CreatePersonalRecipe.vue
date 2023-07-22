@@ -1,13 +1,20 @@
 <template>
   <div class="container">
+
+    <!-- Modal for creating a new personal recipe -->
     <b-modal 
       id="modal-1"
       ref="my-modal"
       title="Create New Personal Recipe"
       hide-footer
-      class="recipe-modal">
+      class="recipe-modal"
+      >
+
+      <!-- Form to input recipe details -->
       <b-form @submit.prevent="onSave" @reset.prevent="onReset">
         <b-form-group>
+
+          <!-- Input for recipe name --> 
           <b-form-input
             id="input-recipe_name"
             v-model="form.recipe_name"
@@ -17,6 +24,7 @@
           ></b-form-input>
         </b-form-group>
 
+        <!-- Input for prepare time -->
         <b-form-group>
           <b-form-input
             id="input-prepare_time"
@@ -28,6 +36,7 @@
           ></b-form-input>
         </b-form-group>
 
+        <!-- Input for portions -->
         <b-form-group>
           <b-form-input
             id="input-portions"
@@ -39,16 +48,18 @@
           ></b-form-input>
         </b-form-group>
 
+        <!-- Input for image url -->
         <b-form-group>
           <b-form-input
             id="input-image"
             v-model="form.image_recipe"
             type="url"
-            placeholder="Enter the URL image_recipe of the recipe "
+            placeholder="Enter the image URL of the recipe "
             required
           ></b-form-input>
         </b-form-group>
 
+        <!-- Checkboxes for specifying dietary restrictions --> 
         <b-form-group>
           <b-row>
             <b-col>
@@ -77,6 +88,8 @@
           </b-row>
         </b-form-group>
 
+
+        <!-- Form for adding ingredients --> 
         <b-form-group>
           <b-form>
             <div class="header">
@@ -131,6 +144,7 @@
           </b-form>
         </b-form-group>
 
+        <!-- Form for adding instructions --> 
         <b-form-group>
           <div class="header">
             <b-form-group>
@@ -162,12 +176,11 @@
                 {{ display_instructions }}
               </p>
             </b-form-group>
-
-           
           </b-form-group>
         </b-form-group>
 
-      
+
+        <!-- Buttons to reset the form and save the recipe -->
         <b-row>
           <b-col>
             <b-button
@@ -202,6 +215,7 @@ export default {
         { value: "pinch", text: "pinch" },
       ],
 
+      // Data properties for the form 
       form: {
         recipe_name: "",
         prepare_time: "",
@@ -232,13 +246,16 @@ export default {
     this.onReset();
   },
   methods: {
+    // Method to save the new recipe
     async Save() {
       try {
+        // Fetch the user ID 
         const response1 = await this.axios.get(
           this.$root.store.server_domain + "/users/getUserId"
         );
         const user_id = response1.data.user_id;
 
+        // POST the new recipe data to the server
         const response2 = await this.axios.post(
           this.$root.store.server_domain + "/users/createPersonalRecipe",
           {
@@ -255,6 +272,7 @@ export default {
             RecipesInstructions: this.RecipesInstructions,
           }
         );
+        // Reset the form and close the modal
         await this.onReset();
         this.$refs["my-modal"].hide();
         
@@ -263,14 +281,14 @@ export default {
         this.$root.toast("error", "Error in creating recipe", "danger");
       }
     },
+    // Method to handle form submission
     async onSave() {
-      if (
-        this.RecipesIngredients.length > 0 &&
-        this.RecipesInstructions.length > 0
-      ) {
+      if ( this.RecipesIngredients.length > 0 && this.RecipesInstructions.length > 0 ) {
+        // Call the Save method and display success toast
         await this.Save();
         this.$root.toast("success", "Recipe created successfully", "success");
       } else {
+        // Display a warning toast if the form is incomplete
         let errorMessage = "";
         if (this.RecipesIngredients.length === 0) {
           errorMessage += "Ingredients field is empty. ";
@@ -282,7 +300,7 @@ export default {
       }
       
     },
-
+    // Method to reset the form
     async onReset() {
       (this.form = {
         recipe_name: "",
@@ -303,15 +321,14 @@ export default {
       };
       (this.RecipesIngredients = []),
         (this.RecipesInstructions = []),
-        (this.display_ingredients = "");
-      (this.display_instructions = "");
+        (this.display_ingredients = ""),
+      (this.display_instructions = "")
     },
+    // Method to add an ingredient to the form
     add_ingredient() {
-      if (
-        this.form_ingredient.ingredient_name !== "" &&
-        this.form_ingredient.amount !== ""
-      ) {
-        let obj = {
+      if ( this.form_ingredient.ingredient_name !== "" && this.form_ingredient.amount !== "" ) {
+      // Add ingredient to the RecipesIngredients array and update display
+      let obj = {
           ingredient_name: this.form_ingredient.ingredient_name,
           amount: this.form_ingredient.amount,
           unitLong: this.form_ingredient.unitLong,
@@ -331,7 +348,10 @@ export default {
         };
       }
     },
+
+    // Method to add an instruction step to the form
     add_instruction_step() {
+      // Add instruction step to the RecipesInstructions array and update display
       if (this.form_instruction.instruction !== "") {
         this.RecipesInstructions.push(this.form_instruction.instruction);
         this.display_instructions += this.form_instruction.instruction + ", ";
@@ -341,6 +361,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
 .header{

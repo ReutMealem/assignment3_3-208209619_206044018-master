@@ -1,7 +1,9 @@
 <template>
     <div class="container">
-      Favorites Page
-      <RecipePreviewList page_type="favorite" path="/users/userFavoriteRecipes" class="FavoritesRecipes center" /> 
+      <div class="title">Favorites Page</div>
+
+    <!-- RecipePreviewList component to display favorite recipes -->
+    <RecipePreviewList page_type="favorite" path="/users/userFavoriteRecipes" class="FavoritesRecipes center" /> 
     </div>
 </template>
   
@@ -17,10 +19,14 @@
 @import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
 
 .container{
-  text-align: center;
   font-family: 'Concert One', serif;
+  font-size: 20px;
+  color:black;
+}
+.title{
   font-size: 40px;
   font-weight: 400;
-  color:black;
+  text-align: center;
+
 }
 </style>

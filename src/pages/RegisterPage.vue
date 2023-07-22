@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <h1 class="title">Register</h1>
+
+    <!-- Register Form --> 
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
+
+      <!-- Username Input -->
       <b-form-group
         id="input-group-username"
         label-cols-sm="3"
@@ -25,6 +29,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- First Name Input -->
       <b-form-group
         id="input-group-firstName"
         label-cols-sm="3"
@@ -38,13 +43,14 @@
           :state="validateState('firstName')"
         ></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.firstName.required">
-        First Name is required
+          First Name is required
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
           First Name can only contain letters
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Last Name Input -->
       <b-form-group
         id="input-group-lastName"
         label-cols-sm="3"
@@ -65,6 +71,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Country Select -->
       <b-form-group
         id="input-group-country"
         label-cols-sm="3"
@@ -80,6 +87,7 @@
         <b-form-invalid-feedback> Country is required </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Password Input -->
       <b-form-group
         id="input-group-Password"
         label-cols-sm="3"
@@ -118,6 +126,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Confirm Password Input -->
       <b-form-group
         id="input-group-confirmedPassword"
         label-cols-sm="3"
@@ -140,6 +149,8 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+
+      <!-- Email Input -->
       <b-form-group
         id="input-group-email"
         label-cols-sm="3"
@@ -160,19 +171,16 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="reset" variant="danger">Reset</b-button>
-      <b-button
-        type="submit"
-        variant="primary"
-        style="width: 250px"
-        class="ml-5 w-75"
-        >Register</b-button
-      >
+      <!-- Reset and Register Buttons -->
+      <b-button type="reset" class="ml-1 click-button">Reset</b-button>
+      <b-button type="submit" class="ml-3 w-60 click-button">Register</b-button>
       <div class="mt-2">
         You have an account already?
         <router-link to="login"> Log in here</router-link>
       </div>
     </b-form>
+
+    <!-- Register Error Alert -->
     <b-alert
       class="mt-2"
       v-if="form.submitError"
@@ -182,10 +190,6 @@
     >
       Register failed: {{ form.submitError }}
     </b-alert>
-    <!-- <b-card class="mt-3 md-3" header="Form Data Result">
-      <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
-      <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
-    </b-card> -->
   </div>
 </template>
 
@@ -221,6 +225,7 @@ export default {
   },
   validations: {
     form: {
+      // Validation rules for the registration form fields
       username: {
         required,
         length: (u) => minLength(3)(u) && maxLength(8)(u),
@@ -258,11 +263,11 @@ export default {
     },
   },
   mounted() {
-    // console.log("mounted");
+    // Initialize countries select options
     this.countries.push(...countries);
-    // console.log($v);
   },
   methods: {
+    // Validate the state of the form input
     validateState(param) {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
@@ -270,7 +275,6 @@ export default {
     async Register() {
       try {
         const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Register",
           this.$root.store.server_domain + "/Register",
           {
             username: this.form.username,
@@ -279,16 +283,16 @@ export default {
             country: this.form.country,
             password: this.form.password,
             email: this.form.email,
-
           }
         );
+        // Redirect to the login page after successful registration
         this.$router.push("/login");
-        // console.log(response);
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
+    // Handle the form submission
     onRegister() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
@@ -296,6 +300,7 @@ export default {
       }
       this.Register();
     },
+    // Handle the form reset
     onReset() {
       this.form = {
         username: "",
@@ -314,31 +319,34 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Concert+One:400,700&display=swap");
 
-.container{
+.container {
   // text-align: center;
-  font-family: 'Concert One', serif;
+  font-family: "Concert One", serif;
   font-size: 20px;
-  color:black;
+  color: black;
   max-width: 600px;
 }
-.title{
+.title {
   text-align: center;
   font-size: 40px;
   font-weight: 400;
+  padding: 15px;
 }
-.click-button{
-  font-family: 'Concert One', serif;
-  font-size: 20px;
+.click-button {
+  font-family: "Concert One", serif;
+  font-size: 18px;
   font-weight: 400;
-  color:black;
-  width:20%;
-  padding: 10px;
+  color: black;
+  width: 20%;
+  padding: 8px;
   border-radius: 10px;
-}
-.click-button:hover{
-  
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
+.click-button:hover {
+  color: white;
+  background-color: #28b1bd;
+}
 </style>

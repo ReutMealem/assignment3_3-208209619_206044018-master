@@ -1,80 +1,61 @@
 <template>
-  
-<div> 
-  <router-link :to="{ name: 'recipe',query: {recipe: JSON.stringify(recipe), type: type, favor: favorite} }">
-  <b-card
-    :title="recipe.recipe_name"
-    :img-src="recipe.image_recipe" 
-    img-alt="Image"
-    img-top
-    tag="article"
-    style="width: 25rem; height: 37rem;"
-    class="mb-2"
-  >
-    <b-card-text>
-      <ul class="recipe-overview" style=" list-style-type: none;" >
-        <li><b><img :src="require('@/assets/clock.png')" height="30" width="30" alt="!"> {{recipe.prepare_time}} Minutes</b><br/></li>
-        <li><b><img :src="require('@/assets/likes.png')" height="30" width="30" alt="!"> {{recipe.likes}} Likes</b><br/></li>
-        <li v-if="recipe.is_vegan"><b><img :src="require('@/assets/vegan.png')" height="30" width="30" alt="!"> Vegan</b><br/></li>
-        <li v-if="recipe.is_veget"><b><img :src="require('@/assets/vegetarian.png')" height="30" width="30" alt="!"> Vegetarian</b><br/></li>
-        <li v-if="recipe.is_glutenFree"><b><img :src="require('@/assets/glutenFree.png')" height="30" width="30" alt="!"> Gluten Free</b><br/></li>
-        <!-- viewed - just for now to have indication -->
-        <li v-if="viewed || 
-favorite" >
-          <img :src="require('@/assets/eye.png')" class="small-image" v-if="viewed" />
-          <img :src="require('@/assets/heart.png')" class="small-image" v-if="favorite" /> 
-        </li>
-      </ul>
-
-    </b-card-text>
-    <!-- <b-button variant="primary">ADD TO FAVORITE </b-button>     -->
-    <router-link :to="{ name: 'recipe', query: {recipe: JSON.stringify(recipe), type: type, favor: favorite} }" class="view-button" tag="button" >View Recipe</router-link>
-    <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
-  </b-card>
-  </router-link>
-</div>
+  <div>
+    <!-- Link to view the detailed recipe -->
+    <router-link :to="{ name: 'recipe', query: { recipe: JSON.stringify(recipe), type: type, favor: favorite } }">
+      <b-card tag="article" style="width: 50rem; height: 23rem;" class="mb-2">
+        <div class="row">
+          <!-- Recipe Image -->
+          <div class="col-md-6">
+            <img :src="recipe.image_recipe" :alt="recipe.recipe_name" class="recipe-image" />
+          </div>
+          <!-- Recipe Details -->
+          <div class="col-md-6">
+            <b-card-text>
+              <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+              <ul class="recipe-overview" style="list-style-type: none;">
+                <li>
+                  <b><img :src="require('@/assets/clock.png')" height="30" width="30" alt="!"> {{ recipe.prepare_time }} Minutes</b><br />
+                </li>
+                <li>
+                  <b><img :src="require('@/assets/likes.png')" height="30" width="30" alt="!"> {{ recipe.likes }} Likes</b><br />
+                </li>
+                <li v-if="recipe.is_vegan">
+                  <b><img :src="require('@/assets/vegan.png')" height="30" width="30" alt="!"> Vegan</b><br />
+                </li>
+                <li v-if="recipe.is_veget">
+                  <b><img :src="require('@/assets/vegetarian.png')" height="30" width="30" alt="!"> Vegetarian</b><br />
+                </li>
+                <li v-if="recipe.is_glutenFree">
+                  <b><img :src="require('@/assets/glutenFree.png')" height="30" width="30" alt="!"> Gluten Free</b><br />
+                </li>
+              <!-- Display icons for viewed and favorite recipes -->
+                <li v-if="viewed || favorite">
+                  <img :src="require('@/assets/eye.png')" class="small-image" v-if="viewed" />
+                  <img :src="require('@/assets/heart.png')" class="small-image" v-if="favorite" />
+                </li>
+              </ul>
+            </b-card-text>
+            <!-- Link to view the recipe details -->
+            <router-link :to="{ name: 'recipe', query: { recipe: JSON.stringify(recipe), type: type, favor: favorite } }" class="view-button" tag="button">View Recipe</router-link>
+          </div>
+        </div>
+      </b-card>
+    </router-link>
+  </div>
 </template>
+
+
 
 <script>
 export default {
   mounted() {
-    // this.check_image();
     this.checkImageValidity();
-
   },
   data() {
     return {
       image_load: false,
-      
     };
   },
-
-  methods: {
-async checkImageValidity() {
-    const imageUrl = this.recipe.recipe_image;
-    
-    try {
-      await new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = imageUrl;
-      });
-
-      // Image loaded successfully
-      // this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
-
-      // recipe.imageLoadError = false;
-    } catch (error) {
-      // Error loading image, set fallback image path
-      this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
-      // recipe.imageLoadError = true;
-    }
-  }
-  },
-
-  
-  
   props: {
     recipe: {
       type: Object,
@@ -92,7 +73,25 @@ async checkImageValidity() {
       type: Boolean,
       required: true
     }
+  },
+  methods: {
+async checkImageValidity() {
+    const imageUrl = this.recipe.recipe_image;
+    
+    try {
+      await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = imageUrl;
+      });
+
+    } catch (error) {
+      this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
+    }
   }
+  },
+
 };
 </script>
 
@@ -107,6 +106,7 @@ async checkImageValidity() {
   font-size:16px;
   font-weight: 400;
   color:black;
+  margin-bottom: 0px;
 }
 .view-button:hover {
   color:white;
@@ -210,4 +210,8 @@ async checkImageValidity() {
 
 }
 
+.recipe-image {
+  width: 100%;
+  height: auto;
+}
 </style>
