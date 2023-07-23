@@ -48,12 +48,7 @@
 
 <script>
 export default {
- 
-  data() {
-    return {
-      image_load: false,
-    };
-  },
+
   props: {
     recipe: {
       type: Object,
@@ -72,7 +67,7 @@ export default {
       required: true
     }
   },
-  
+
 };
 </script>
 
