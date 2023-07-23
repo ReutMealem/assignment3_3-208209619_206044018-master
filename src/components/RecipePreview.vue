@@ -48,9 +48,7 @@
 
 <script>
 export default {
-  mounted() {
-    this.checkImageValidity();
-  },
+ 
   data() {
     return {
       image_load: false,
@@ -74,24 +72,7 @@ export default {
       required: true
     }
   },
-  methods: {
-async checkImageValidity() {
-    const imageUrl = this.recipe.recipe_image;
-    
-    try {
-      await new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = imageUrl;
-      });
-
-    } catch (error) {
-      this.recipe.recipe_image = require('@/assets/spongebob-imagination-icegif.gif');
-    }
-  }
-  },
-
+  
 };
 </script>
 
