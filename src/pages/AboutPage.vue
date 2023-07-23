@@ -124,7 +124,7 @@ export default {
           image: require("../assets/lidorWeb.jpg"),
           description:
             "This website is a heartfelt tribute to Joe Biden, a distinguished statesman and leader. With immense admiration and respect for his contributions, I've created this platform to celebrate his life and achievements. As a significant figure in politics, his impact has inspired countless individuals worldwide. Join me in honoring his legacy and the positive changes he's brought to the world.",
-          linkToWeb: "https://www.linkedin.com/in/reut-mealem-344141270/",
+          linkToWeb: "https://web-development-environments-2023.github.io/208209619/",
         },
       ],
     };
