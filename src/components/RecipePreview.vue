@@ -109,8 +109,8 @@ async checkImageValidity() {
   margin-bottom: 0px;
 }
 .view-button:hover {
-  color:white;
-  background-color:  #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
   /* Add other effects like color or box-shadow as needed */
 }
 .recipe-preview {
@@ -128,17 +128,21 @@ async checkImageValidity() {
 
 }
 
-.recipe-preview .recipe-body .recipe-image {
+.recipe-preview .recipe-body  {
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
   display: block;
   width: 98%;
-  height: auto;
+  height: 21rem;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+}
+.recipe-image{
+height:20rem;
+width:98%;
 }
 
 .recipe-preview .recipe-footer {
@@ -199,7 +203,7 @@ async checkImageValidity() {
 
 
 .card {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.815);
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -210,8 +214,4 @@ async checkImageValidity() {
 
 }
 
-.recipe-image {
-  width: 100%;
-  height: auto;
-}
 </style>

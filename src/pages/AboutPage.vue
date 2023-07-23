@@ -21,7 +21,7 @@
             img-alt="Image"
             img-top
             tag="article"
-            style="width: 20rem; height: 50rem;"
+            style="width: 20rem; height: 52rem;"
             class="mb-2"
           >
             <b-card-text>{{ partner.description }}</b-card-text>
@@ -38,7 +38,7 @@
             img-height="305px"
             img-width="200px"
             tag="article"
-            style="width: 20rem; height: 50rem;"
+            style="width: 20rem; height: 52rem;"
             class="mb-2">
 
             <b-card-text>
@@ -56,7 +56,7 @@
   
       <div class="title">
         <b-row>
-          About our older website:
+          About our older websites:
         </b-row>
       </div>
       <!-- Display information about each older project using Bootstrap-Vue cards --> 
@@ -144,21 +144,21 @@ export default {
     font-size:16px;
     font-weight: 400;
     color:#000000;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.8);
     width:100%;
     box-shadow: 0 5px #999;
 
   }
   .button:hover {
-    color:white;
-    background-color:  #28b1bd;
+    color: black;
+    background-color:  rgb(245, 230, 220);
   }
 
   .button:active {
     box-shadow: 0 3px #666;
   }
   .card {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

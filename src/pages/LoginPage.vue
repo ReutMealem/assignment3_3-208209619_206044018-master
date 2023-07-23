@@ -37,12 +37,12 @@ export default {
   width:20%;
   padding: 8px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
 
 }
 .click-button:hover{
-  color:white;
-  background-color:  #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
 }
 
 </style>

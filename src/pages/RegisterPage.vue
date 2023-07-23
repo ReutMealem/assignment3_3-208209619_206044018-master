@@ -48,6 +48,10 @@
         <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
           First Name can only contain letters
         </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.username.maxLength">
+          First Name should contain 700 chars only
+        </b-form-invalid-feedback>
+        
       </b-form-group>
 
       <!-- Last Name Input -->
@@ -68,6 +72,9 @@
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.lastName.alpha">
           Last Name can only contain letters
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.username.maxLength">
+          Last Name should contain 700 chars only
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -169,6 +176,9 @@
         <b-form-invalid-feedback v-if="!$v.form.email.email">
           Invalid email format
         </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.username.maxLength">
+          Email should contain 700 chars only
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <!-- Reset and Register Buttons -->
@@ -234,10 +244,12 @@ export default {
       firstName: {
         required,
         alpha,
+        maxLength: maxLength(700), 
       },
       lastName: {
         required,
         alpha,
+        maxLength: maxLength(700), 
       },
       country: {
         required,
@@ -259,6 +271,7 @@ export default {
       email: {
         required,
         email,
+        maxLength: maxLength(700), 
       },
     },
   },
@@ -342,11 +355,11 @@ export default {
   width: 20%;
   padding: 8px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .click-button:hover {
-  color: white;
-  background-color: #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
 }
 </style>

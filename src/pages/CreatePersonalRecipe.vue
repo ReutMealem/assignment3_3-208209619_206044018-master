@@ -21,6 +21,7 @@
             type="text"
             placeholder="Enter recipe name"
             required
+            maxlength="700"
           ></b-form-input>
         </b-form-group>
 
@@ -32,7 +33,8 @@
             type="number"
             placeholder="Enter preparation time in minutes "
             required
-            min="0"
+            min="1"
+            max="1000"
           ></b-form-input>
         </b-form-group>
 
@@ -44,7 +46,8 @@
             type="number"
             placeholder="Enter portions number"
             required
-            min="0"
+            min="1"
+            max="1000"
           ></b-form-input>
         </b-form-group>
 
@@ -56,6 +59,7 @@
             type="url"
             placeholder="Enter the image URL of the recipe "
             required
+            maxlength="700"
           ></b-form-input>
         </b-form-group>
 
@@ -105,6 +109,7 @@
                     type="text"
                     placeholder="Enter ingredient"
                     required
+                    maxlength="700"
                   ></b-form-input>
                 </b-form-group>
 
@@ -112,7 +117,8 @@
                   <b-form-input
                     v-model="form_ingredient.amount"
                     type="number"
-                    min="0"
+                    min="1"
+                    max="1000"
                     placeholder="Enter amount"
                     required
                   ></b-form-input>
@@ -123,6 +129,7 @@
                     v-model="form_ingredient.unitLong"
                     :options="unitOptions"
                     placeholder="Select unit"
+                    maxlength="700"
                   ></b-form-select>
                 </b-form-group>
 
@@ -157,7 +164,9 @@
                 id="textarea-instruction"
                 v-model="form_instruction.instruction"
                 placeholder="Enter instruction step..."
-                rows="2">
+                rows="2"
+                maxlength="700"
+                >
               </b-form-textarea>
             </b-form-group>
             <b-form-group>
@@ -242,10 +251,17 @@ export default {
       display_instructions: "",
     };
   },
+  
   mounted() {
     this.onReset();
   },
   methods: {
+    validateNumberInput(newVal) {
+      const value = parseInt(newVal, 10);
+      if (isNaN(value) || value < 1 || value > 1000) {
+        this.$set(this.form, this.$options.name, 1);
+      }
+    },
     // Method to save the new recipe
     async Save() {
       try {
@@ -274,6 +290,7 @@ export default {
         );
         // Reset the form and close the modal
         await this.onReset();
+        this.$root.toast("success", "Recipe created successfully", "success");
         this.$refs["my-modal"].hide();
         
       } catch (err) {
@@ -286,7 +303,6 @@ export default {
       if ( this.RecipesIngredients.length > 0 && this.RecipesInstructions.length > 0 ) {
         // Call the Save method and display success toast
         await this.Save();
-        this.$root.toast("success", "Recipe created successfully", "success");
       } else {
         // Display a warning toast if the form is incomplete
         let errorMessage = "";
@@ -358,7 +374,29 @@ export default {
         this.form_instruction.instruction = "";
       }
     },
+
   },
+  watch: {
+  'form.prepare_time': function(newVal) {
+    const value = parseInt(newVal, 10);
+    if (isNaN(value) || value < 1 || value > 1000 || newVal !== value.toString()) {
+      this.form.prepare_time = 1;
+    }
+  },
+  'form.portions': function(newVal) {
+    const value = parseInt(newVal, 10);
+    if (isNaN(value) || value < 1 || value > 1000 || newVal !== value.toString()) {
+      this.form.portions = 1;
+    }
+  },
+  'form_ingredient.amount': function(newVal) {
+    const value = parseInt(newVal, 10);
+    if (isNaN(value) || value < 1 || value > 1000 || newVal !== value.toString()) {
+      this.form_ingredient.amount = 1;
+    }
+  },
+},
+
 };
 </script>
 
@@ -386,11 +424,6 @@ export default {
   font-size: 14px;
 }
 
-.b-form-input:hover,.b-form-select:hover,.b-form-textarea:hover,.b-form-input:focus,.b-form-select:focus,.b-form-textarea:focus {
-  border-color: #4285f4; 
-  box-shadow: 0 0 5px rgba(66, 133, 244, 0.5); 
-}
-
 .b-form-checkbox {
   margin-right: 10px;
 }
@@ -407,8 +440,8 @@ export default {
   padding: 8px 10px;
   text-align: center;
   border-radius: 10px;
-  background-color:  #28b1bd;
-  color:white;
+  background-color:  rgb(245, 230, 220);
+  color: black;
 
 }
 .buttons:hover {

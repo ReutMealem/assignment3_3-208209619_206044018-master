@@ -93,14 +93,14 @@ export default {
   font-size:16px;
   font-weight: 400;
   color:#000000;
-  background-color: rgba(255, 255, 255, 0.777);
+  background-color: rgba(255, 255, 255, 0.8);
   width: 20rem;
 }
 .button-center{
   margin-left: 230px;
 }
 .button-center:hover {
-  color:white;
-  background-color:  #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
 }
 </style>

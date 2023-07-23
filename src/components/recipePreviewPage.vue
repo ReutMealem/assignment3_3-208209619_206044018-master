@@ -7,16 +7,16 @@
         <h1>{{ recipe.recipe_name }}</h1> 
         <!-- Display favorite heart icon and button for authenticated users -->
         <b v-if="$root.store.username">
-          <img :src="require('@/assets/heart.png')" class="center small-image" v-if="isfavorite" />
+          <img :src="require('@/assets/heart.png')" class="center small-image" v-if="getIsFav" />
           <div>
-            <button class="fav-button" @click="addToFavorites()" v-if="!isfavorite">
+            <button class="fav-button" @click="addToFavorites" v-if="!getIsFav">
               Add To Favorites
             </button>
         </div>
         </b>
 
         <!-- Display recipe image --> 
-        <img :src="recipe.image_recipe" class="center" />
+        <img :src="recipe.image_recipe" class="center imagesize" />
       </div>
       <!-- Recipe Body -->
       <div class="recipe-body">
@@ -95,7 +95,16 @@ export default {
       required: true
     }
   },
-  
+  // data() {
+  //   return {
+  //     isfavorite: false // Initialize local data property
+  //   }
+  // },
+  computed:{
+    getIsFav(){
+      return this.isfavorite;
+    },
+  },
   methods: {
     // Method to add the recipe to favorites 
     async addToFavorites() {
@@ -106,6 +115,7 @@ export default {
             `${this.$root.store.server_domain}/users/userFavoriteRecipes/${this.recipe.recipe_id}/${this.type}`
           );
           this.onUpdateRecipe();
+          this.isfavorite =true;
         } catch (error) {
           console.error(error);
         }
@@ -122,9 +132,9 @@ export default {
     },
     // Method to refresh the page after adding the recipe to favorites 
     async RefreshPage() {
-    this.new_random=true;
-    window.location.reload();
-    this.new_random=false;
+    
+    // window.location.reload();
+    
   }
   }
 };
@@ -157,7 +167,7 @@ export default {
   height: 50px; 
 }
 .recipe-body{
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -183,9 +193,12 @@ export default {
 }
 
 .fav-button:hover {
-  color:white;
-  background-color:  #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
   /* Add other effects like color or box-shadow as needed */
 }
-
+.imagesize{
+  width: 30rem;
+  height: 25rem;
+}
 </style>

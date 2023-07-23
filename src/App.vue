@@ -3,7 +3,7 @@
 
     <navbar></navbar>
     <router-view id="router-view" style="min-height: 900px"></router-view>
-    <footer style="background-color: transparent; color: white"> @lireRecipes </footer>
+    <footer style="background-color: transparent; color:black"> @lireRecipes </footer>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
-  background-image:  url('./assets/recipe_background.jpg');
+  background-image:  url('./assets/recipes_background.png');
   background-size: cover;
 }
 

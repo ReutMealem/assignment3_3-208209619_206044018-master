@@ -114,26 +114,25 @@
           </b-form-group>
 
           <!-- Reset and Search Buttons -->
-          <b-form-group>
+          <b-form-group >
             <b-button
               type="reset"
               v-if="!showSearchResult"
-              class="ml-5 w-15 buttons"
+              class=" w-15 buttons"
               >Reset</b-button
             >
             <b-button
               type="submit"
               v-if="!showSearchResult"
-              class="ml-5 w-20 buttons"
+              class=" w-20 buttons"
               >Search</b-button
             >
-          </b-form-group>
 
           <!-- Last Search Button -->
-          <b-form-group>
+          
             <b-button
               type="button"
-              class="buttons"
+              class=" w-15 buttons"
               v-on:click="showLastSearch"
               v-if="
                 $root.store.username && !lastSearch == '' && !showSearchResult
@@ -141,6 +140,7 @@
               >Last search</b-button
             >
           </b-form-group>
+
         </b-form>
       </div>
 
@@ -275,7 +275,6 @@ export default {
           this.searchPath += "null";
         }
 
-        console.log("this.searchPath: ", this.searchPath);
         this.showSearchResult = true;
         this.lastSearch = {
           recipe_name: this.form.recipe_name,
@@ -335,21 +334,23 @@ export default {
   font-size: 16px;
   font-weight: 400;
   color: #000000;
-  background-color: rgba(255, 255, 255, 0.5);
-  width: 35%;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 20%;
+  margin-right: 20px;
+
 }
 .button-back {
   margin-left: 18px;
 }
 .buttons:hover {
-  color: white;
-  background-color: #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
 }
 .results {
   border-radius: 10px;
   width: 50rem;
   color: black;
-  background-color: rgba(255, 255, 255, 0.447);
+  background-color: rgba(255, 255, 255, 0.8);
   margin-left: 18px;
   // padding:5px;
 }

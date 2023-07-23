@@ -144,7 +144,7 @@ export default {
   color: black;
   max-width: 600px;
 
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -164,14 +164,14 @@ export default {
   width: 20%;
   padding: 8px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .button1 {
   margin-right: 320px;
-  background-color: rgba(245, 48, 48, 0.664);
+  background-color:  rgb(245, 230, 220);
 }
 .click-button:hover {
-  color: white;
-  background-color: #28b1bd;
+  color: black;
+  background-color:  rgb(245, 230, 220);
 }
 </style>

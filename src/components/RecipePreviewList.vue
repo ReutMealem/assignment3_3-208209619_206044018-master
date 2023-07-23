@@ -67,7 +67,6 @@ export default {
         // Method to fetch and update the list of recipes 
         this.noResults = false;
         const response = await this.axios.get(this.$root.store.server_domain + this.path);
-        console.log(this.path);
         if(response.data.recipes.length === 0){
          this.noResults = true;
         }
@@ -131,7 +130,6 @@ export default {
         this.$root.store.server_domain + "/users/userFavoriteRecipesByIdType"
         );
         this.favoritesRecipes = response.data.recipes;
-        console.log("favo: " ,this.favoritesRecipes)
     },
     // Method to check if a recipe is in favorites based on its ID and type 
    isRecipeInFavorites(id) {
@@ -142,10 +140,8 @@ export default {
       const foundRecipe = this.favoritesRecipes.find((recipe) => recipe.recipe_id === id && recipe.recipe_type === this.page_type);
 
       if (foundRecipe === undefined) {
-        console.log("Recipe is NOT in favorites -> false");
         return false;
       } else {
-        console.log("Recipe is in favorites- > true");
         return true;
       }
     }

@@ -1,11 +1,11 @@
 <template>
   <!-- Menu Bar --> 
   <div class="menu_bar">
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar class="navbar navbar-light" style="background-color: rgb(245, 230, 220) !important;" toggleable="lg" type="dark" variant="info">
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-brand href="#">
           <!-- LiRe Logo -->
-          <img src="@/assets/logo.png" height="50" width="80" alt="LiRe" />
+          <img src="@/assets/logo.png" height="40" width="80" alt="LiRe" />
         </b-navbar-brand>
 
         <!-- Home Link -->
@@ -165,12 +165,15 @@
             </b-navbar-nav>
 
             <!-- Guest Welcome Message -->
+
             <b-navbar-nav>
-              <b-nav-text>
-                <span class="guest">Hello Guest</span>
-              </b-nav-text>
+                <b-nav-text>
+                  <b-navbar-brand href="#">
+                    <span class="guest">Hello Guest</span>
+                  </b-navbar-brand>
+                </b-nav-text>
+              </b-navbar-nav>
             </b-navbar-nav>
-          </b-navbar-nav>
 
           <!-- User Dropdown (for authenticated users) --> 
           <b-navbar-nav v-else class="ml-auto">
@@ -223,11 +226,9 @@ export default {
       });
     },
     showPersonalModal() {
-      console.log("createPersonalRecipeClicked");
       this.createPersonalRecipeClicked = true;
     },
     showFamilyModal() {
-      console.log("createFamilyRecipeClicked");
       this.createFamilyRecipeClicked = true;
     },
   },
@@ -244,7 +245,8 @@ export default {
 }
 
 .item:hover {
-  color: rgb(150, 218, 214);
+  color:    rgb(241, 139, 71);
+
   text-shadow: 0.1px 1px black;
   cursor: pointer;
 }
